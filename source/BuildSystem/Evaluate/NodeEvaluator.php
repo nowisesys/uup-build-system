@@ -76,14 +76,26 @@ class NodeEvaluator implements TargetInterface
         }
     }
 
+    private function setParents(NodeInterface $node, array &$parents): void
+    {
+        foreach ($node->getParents() as $parent) {
+            $this->setParents($parent, $parents);
+            if (!array_key_exists($parent->getTarget()->getName(), $parents)) {
+                $parents[$parent->getTarget()->getName()] = $parent;
+            }
+        }
+
+        if (!array_key_exists($node->getTarget()->getName(), $parents)) {
+            $parents[$node->getTarget()->getName()] = $node;
+        }
+    }
+
     private function getParents(): array
     {
         $parents = [];
 
-        if ($this->node->hasParent()) {
-            for ($parent = $this->node->getParent(); $parent; $parent = $parent->getParent()) {
-                array_unshift($parents, $parent);
-            }
+        foreach ($this->node->getParents() as $parent) {
+            $this->setParents($parent, $parents);
         }
 
         return $parents;

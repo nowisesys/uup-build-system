@@ -9,29 +9,31 @@ use UUP\BuildSystem\Target\TargetInterface;
 
 class DependencyNode implements NodeInterface
 {
-    private ?NodeInterface $parent;
     private TargetInterface $target;
+    private array $parents = [];
     private array $children = [];
 
     public function __construct(TargetInterface $target, ?NodeInterface $parent = null)
     {
-        $this->parent = $parent;
         $this->target = $target;
+        $this->addParent($parent);
     }
 
-    public function getParent(): ?NodeInterface
+    public function getParents(): array
     {
-        return $this->parent;
+        return $this->parents;
     }
 
-    public function setParent(NodeInterface $parent): void
+    public function addParent(?NodeInterface $parent): void
     {
-        $this->parent = $parent;
+        if ($parent) {
+            $this->parents[] = $parent;
+        }
     }
 
     public function hasParent(): bool
     {
-        return isset($this->parent);
+        return !empty($this->parents);
     }
 
     public function getChildren(): array
@@ -41,7 +43,7 @@ class DependencyNode implements NodeInterface
 
     public function addChild(NodeInterface $node): NodeInterface
     {
-        $node->setParent($this);
+        $node->addParent($this);
         return $this->children[] = $node;
     }
 

@@ -63,18 +63,28 @@ class DependencyList implements TargetInterface
         $this->setRegistry($root, $registry);
 
         foreach ($registry->getNodes() as $node) {
-            if ($node->hasParent()) {
-                $target = $node->getTarget()->getName();
-                $parent = $node->getParent()->getTarget()->getName();
-            } else {
-                $target = $node->getTarget()->getName();
-                $parent = "";
-            }
+            $target = $node->getTarget()->getName();
+            $parent = $this->getParents($node);
 
             $result[$target] = $parent;
         }
 
         ksort($result);
         return $result;
+    }
+
+    private function getParents(NodeInterface $node)
+    {
+        $result = [];
+
+        foreach ($node->getParents() as $parent) {
+            $result[] = $parent->getTarget()->getName();
+        }
+
+        if (count($result) > 1) {
+            return $result;
+        } else {
+            return current($result);
+        }
     }
 }

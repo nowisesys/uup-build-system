@@ -8,9 +8,9 @@ use UUP\BuildSystem\Target\TargetInterface;
 
 interface NodeInterface
 {
-    public function getParent(): ?NodeInterface;
+    public function getParents(): array;
 
-    public function setParent(NodeInterface $parent): void;
+    public function addParent(NodeInterface $parent): void;
 
     public function getChildren(): array;
 
