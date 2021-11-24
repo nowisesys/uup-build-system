@@ -33,3 +33,22 @@ Run them from command line:
 ```shell
 php example/definition-tree.php
 ```
+
+### FILES:
+
+Dependencies can be declared in text files which are consumed by a file reader. The same reader
+can be used for reading rules from multiple input files:
+
+```php
+$reader = new MakeFileReader();
+
+$reader->addDependencies("makefile1.txt");
+$reader->addDependencies("makefile2.txt");
+
+$reader->getDependencyTree()
+       ->getEvaluator()
+       ->rebuild();
+```
+
+Currently, [GNU makefile](example/file/input.make) or [JSON](example/file/input.json) is the
+supported file formats. 
