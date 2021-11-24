@@ -81,7 +81,7 @@ class NodeEvaluator implements TargetInterface
         $parents = [];
 
         if ($this->node->hasParent()) {
-            for ($parent = $this->node->getParent(); $parent->hasParent(); $parent = $parent->getParent()) {
+            for ($parent = $this->node->getParent(); $parent; $parent = $parent->getParent()) {
                 array_unshift($parents, $parent);
             }
         }

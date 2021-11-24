@@ -8,7 +8,7 @@ use UUP\BuildSystem\Target\TargetInterface;
 
 interface NodeInterface
 {
-    public function getParent(): NodeInterface;
+    public function getParent(): ?NodeInterface;
 
     public function setParent(NodeInterface $parent): void;
 

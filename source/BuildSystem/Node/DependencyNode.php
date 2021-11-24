@@ -19,7 +19,7 @@ class DependencyNode implements NodeInterface
         $this->target = $target;
     }
 
-    public function getParent(): NodeInterface
+    public function getParent(): ?NodeInterface
     {
         return $this->parent;
     }
