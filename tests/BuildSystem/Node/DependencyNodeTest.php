@@ -1,11 +1,11 @@
 <?php
 
-namespace UUP\Tests\BuildSystem\Dependency;
+namespace UUP\Tests\BuildSystem\Node;
 
 use PHPUnit\Framework\TestCase;
+use UUP\BuildSystem\Evaluate\NodeEvaluator;
 use UUP\BuildSystem\Node\DependencyNode;
 use UUP\BuildSystem\Node\NodeInterface;
-use UUP\BuildSystem\Evaluate\NodeEvaluator;
 use UUP\BuildSystem\Target\TargetInterface;
 use UUP\BuildSystem\Tests\Target;
 
@@ -29,19 +29,19 @@ class DependencyNodeTest extends TestCase
         $node = new DependencyNode($target, $parent);
 
         $this->assertTrue($node->hasParent());
-        $this->assertSame($parent, $node->getParent());
+        $this->assertSame($parent, current($node->getParents()));
     }
 
-    public function testSetParent()
+    public function testAddParent()
     {
         $target = new Target("T1");
         $parent = new DependencyNode($target);
 
         $node = new DependencyNode($target);
-        $node->setParent($parent);
+        $node->addParent($parent);
 
         $this->assertTrue($node->hasParent());
-        $this->assertSame($parent, $node->getParent());
+        $this->assertSame($parent, current($node->getParents()));
     }
 
     public function testHasParent()
@@ -52,7 +52,7 @@ class DependencyNodeTest extends TestCase
         $node = new DependencyNode($target);
 
         $this->assertFalse($node->hasParent());
-        $node->setParent($parent);
+        $node->addParent($parent);
         $this->assertTrue($node->hasParent());
     }
 
@@ -78,7 +78,7 @@ class DependencyNodeTest extends TestCase
         $this->assertIsArray($node2->getChildren());
         $this->assertEmpty($node2->getChildren());
 
-        $this->assertSame($node1, $node2->getParent());
+        $this->assertSame($node1, current($node2->getParents()));
     }
 
     public function testGetTarget()
