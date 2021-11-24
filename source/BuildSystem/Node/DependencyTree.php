@@ -32,19 +32,27 @@ class DependencyTree extends DependencyNode implements NodeInterface
 
     public function addDefinition(GoalDefinition $definition): void
     {
+        $registry = $this->registry;
+
         if ($definition->hasDependencies() == false) {
             $definition->addDependency($this->getTarget()->getName());
         }
 
         foreach ($definition->getDependencies() as $name) {
-            if ($this->registry->hasNode($name) == false) {
+            if ($registry->hasNode($name) == false) {
                 throw new InvalidArgumentException("The goal '$name' is not defined");
             }
 
-            $node = $this->registry->getNode($name);
-            $node = $node->addChild(new DependencyNode($definition->getTarget()));
+            $parent = $registry->getNode($name);
+            $target = $definition->getTarget();
 
-            $this->registry->addNode($node);
+            if ($registry->hasNode($target->getName())) {
+                $target = $registry->getNode($target->getName());
+                $parent->addChild($target);
+            } else {
+                $target = $parent->addChild(new DependencyNode($target));
+                $registry->addNode($target);
+            }
         }
     }
 }
