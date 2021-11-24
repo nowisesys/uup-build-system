@@ -14,7 +14,7 @@ abstract class FileReaderBase
     private string $namespace = "";
     private DependencyTree $dependencyTree;
 
-    protected function __construct()
+    public function __construct()
     {
         $this->dependencyTree = new DependencyTree();
     }
