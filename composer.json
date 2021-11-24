@@ -30,12 +30,13 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "UUP\\": "source/"
+            "UUP\\": "source/",
+            "UUP\\Example\\": "example/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests/"
+            "UUP\\Tests\\": "tests/"
         }
     }
 }
