@@ -1,0 +1,62 @@
+{
+    "verbose": true,
+    "debug": true,
+    "namespace": "UUP\\BuildSystem\\Tests",
+    "targets": {
+        "T1": {
+            "class": "Target",
+            "arguments": "T1",
+            "dependencies": []
+        },
+        "T2": {
+            "class": "Target",
+            "arguments": "T2",
+            "dependencies": [
+                "T1"
+            ]
+        },
+        "T3": {
+            "class": "Target",
+            "arguments": "T3",
+            "dependencies": [
+                "T1"
+            ]
+        },
+        "T4": {
+            "class": "Target",
+            "arguments": "T4",
+            "dependencies": [
+                "T2"
+            ]
+        },
+        "T5": {
+            "class": "Target",
+            "arguments": "T5",
+            "dependencies": [
+                "T2",
+                "T3"
+            ]
+        },
+        "T6": {
+            "class": "Target",
+            "arguments": "T6",
+            "dependencies": [
+                "T4"
+            ]
+        },
+        "T7": {
+            "class": "Target",
+            "arguments": "T7",
+            "dependencies": [
+                "T5"
+            ]
+        },
+        "T8": {
+            "class": "Target",
+            "arguments": "T8",
+            "dependencies": [
+                "T5"
+            ]
+        }
+    }
+}
