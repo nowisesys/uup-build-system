@@ -5,12 +5,10 @@ namespace UUP\Tests\BuildSystem\Goal;
 use PHPUnit\Framework\TestCase;
 use UUP\BuildSystem\Goal\GoalRegistry;
 use UUP\BuildSystem\Node\DependencyNode;
-use UUP\BuildSystem\Tests\Depend;
 use UUP\BuildSystem\Tests\Target;
 
 class GoalRegistryTest extends TestCase
 {
-
     public function testGetNodes()
     {
         $registry = new GoalRegistry();
