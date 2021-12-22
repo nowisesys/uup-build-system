@@ -1,0 +1,26 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+(function () {
+    foreach ([
+                 __DIR__ . '/../autoload.php',
+                 __DIR__ . '/../vendor/autoload.php'
+             ] as $autoloader) {
+        if (file_exists($autoloader)) {
+            require_once($autoloader);
+            return;
+        }
+    }
+
+    throw new RuntimeException("Failed locate composer");
+})();
+
+use UUP\Application\Command\ApplicationRunner;
+use UUP\BuildSystem\Action\MakeCommandAction;
+
+$action = new MakeCommandAction();
+$runner = new ApplicationRunner($action);
+
+$runner->execute();
