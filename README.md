@@ -150,3 +150,41 @@ Called isUpdated() on T5 (updated=0)
 Called rebuild() on T5 (updated=0)
 ++ Rebuild complete tree:
 ```
+
+### MAKE COMMAND:
+
+The make command [pbsmake](bin/pbsmake) can be used for executing makefiles and makes it easy to get started. Like 
+standard make, an optional target can be passed:
+
+```shell
+pbsmake example/file/input.make target=T8
+Called isUpdated() on T1 (updated=0)
+Called rebuild() on T1 (updated=0)
+Called isUpdated() on T2 (updated=0)
+Called rebuild() on T2 (updated=0)
+Called isUpdated() on T3 (updated=0)
+Called rebuild() on T3 (updated=0)
+Called isUpdated() on T5 (updated=0)
+Called rebuild() on T5 (updated=0)
+Called isUpdated() on T7 (updated=0)
+Called rebuild() on T7 (updated=0)
+```
+
+Multiple makefiles can be processed. Currently, a limitation is that all makefiles must be of same type.
+
+```shell
+pbsmake -h
+PHP make (build system make runner/action)
+
+Usage: pbsmake makefile1 [...makefiles] [target=name] [type=json]
+
+Options:
+  target=name:  Make this target.
+  type=str:     The type of makefile (make/json).
+
+Generic options:
+  help:     Show this casual help.
+  verbose:  Run in verbose mode.
+  quiet:    Run in quiet mode.
+  debug:    Enable debug output.
+```

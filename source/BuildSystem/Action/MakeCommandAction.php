@@ -38,6 +38,7 @@ class MakeCommandAction extends ApplicationAction
         printf("\n");
         printf("Options:\n");
         printf("  target=name:  Make this target.\n");
+        printf("  type=str:     The type of makefile (make/json).\n");
         printf("\n");
 
         parent::usage();
