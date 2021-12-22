@@ -57,7 +57,7 @@ class MakeFileReader extends FileReaderBase implements FileReaderInterface
      * that are appended to the result array.
      *
      * @param string $filename The filename path.
-     * @return array|array[]
+     * @return array
      */
     private function getMakeContent(string $filename): array
     {

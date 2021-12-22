@@ -21,6 +21,7 @@ declare(strict_types=1);
 namespace UUP\BuildSystem\Evaluate;
 
 use UUP\BuildSystem\Node\NodeInterface;
+use UUP\BuildSystem\Target\RebuildChildrenTrait;
 use UUP\BuildSystem\Target\TargetInterface;
 
 /**
@@ -32,6 +33,8 @@ use UUP\BuildSystem\Target\TargetInterface;
  */
 class NodeEvaluator implements TargetInterface
 {
+    use RebuildChildrenTrait;
+
     private NodeInterface $node;
 
     /**
@@ -131,6 +134,9 @@ class NodeEvaluator implements TargetInterface
      */
     private function rebuildChildren()
     {
+        if (!$this->shouldRebuildChildren()) {
+            return;
+        }
         foreach ($this->node->getChildren() as $child) {
             $child->getEvaluator()->rebuild();
         }
