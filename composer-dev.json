@@ -1,15 +1,7 @@
 {
     "name": "nowise/uup-build-system",
-    "version": "1.1.0",
     "description": "Target build system similar to make with complex dependency tree",
     "type": "library",
-    "keywords": [
-        "build system",
-        "target",
-        "dependencies",
-        "uup"
-    ],
-    "homepage": "https://nowise.se/oss/uup/build-system",
     "license": "Apache-2.0",
     "authors": [
         {
@@ -21,11 +13,21 @@
             "email": "anders.lovgren@interactivesolutions.se"
         }
     ],
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../uup-application"
+        },
+        {
+            "type": "path",
+            "url": "../uup-application-options"
+        }
+    ],
     "require": {
         "php": ">=7.4",
         "ext-json": "*",
-        "nowise/uup-application": "^1.0",
-        "nowise/uup-application-options": "^1.0"
+        "nowise/uup-application": "@dev",
+        "nowise/uup-application-options": "@dev"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5"
@@ -41,8 +43,5 @@
         "psr-4": {
             "UUP\\Tests\\": "tests/"
         }
-    },
-    "bin": [
-        "pbsmake"
-    ]
+    }
 }

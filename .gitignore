@@ -1,5 +1,8 @@
 /vendor/
 .idea/
+
 .phpunit.result.cache
+composer.lock
+composer-dev.lock
 
 TODO.txt
