@@ -97,6 +97,36 @@ testing.
 The default namespace is declared in the makefile. If classes is placed in multiple namespaces, either 
 declare them fully qualified or split declarations in multiple file, each with their own default namespace.
 
+#### IMPLICIT:
+
+Target classes can be deduced from make rule (in Makefile or JSON file). In this case, the left-/right-hand target 
+should be a class. The example Makefile above then becomes:
+
+```makefile
+VERBOSE	:= true
+DEBUG 	:= true
+
+NAMESPACE := UUP\BuildSystem\Tests\Implicit
+
+T1 :
+T2 : T1
+T3 : T1
+T4 : T2
+T5 : T2 T3
+T6 : T4
+T7 : T5
+T8 : T5
+```
+
+Each T* class is present in this test namespace and can be tested with:
+
+```shell
+./vendor/bin/pbsmake example/file/implicit.make target=T3
+```
+
+It's possible to mix rules that uses implicit/explicit target classes. Classes don't have to be defined in the 
+namespace declared in the make file, use fully qualified class name if present in some other namespace.
+
 ### EVALUATION:
 
 The tree is usually completely rebuilt by evaluating its root node:
@@ -157,7 +187,7 @@ The make command [pbsmake](bin/pbsmake) can be used for executing makefiles and 
 standard make, an optional target can be passed:
 
 ```shell
-pbsmake example/file/input.make target=T8
+./vendor/bin/pbsmake example/file/input.make target=T8
 Called isUpdated() on T1 (updated=0)
 Called rebuild() on T1 (updated=0)
 Called isUpdated() on T2 (updated=0)
@@ -173,7 +203,7 @@ Called rebuild() on T7 (updated=0)
 Multiple makefiles can be processed. Currently, a limitation is that all makefiles must be of same type.
 
 ```shell
-pbsmake -h
+./vendor/bin/pbsmake -h
 PHP make (build system make runner/action)
 
 Usage: pbsmake makefile1 [...makefiles] [target=name] [type=json]
