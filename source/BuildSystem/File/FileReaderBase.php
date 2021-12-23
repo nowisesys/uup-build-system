@@ -20,6 +20,7 @@ declare(strict_types=1);
 
 namespace UUP\BuildSystem\File;
 
+use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionException;
 use UUP\BuildSystem\Goal\GoalDefinition;
@@ -84,6 +85,16 @@ abstract class FileReaderBase implements FileReaderInterface
      */
     protected function getGoalDefinition(string $target, array $options): GoalDefinition
     {
+        if (!isset($options['dependencies'])) {
+            throw new InvalidArgumentException("The dependencies is missing in goal definition");
+        }
+        if (!isset($options['class'])) {
+            $options['class'] = $target;
+        }
+        if (!isset($options['arguments'])) {
+            $options['arguments'] = implode(" ", $options['dependencies']);
+        }
+
         /** @noinspection PhpParamsInspection */
 
         return new GoalDefinition(
