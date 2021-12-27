@@ -47,4 +47,14 @@ class NodeEvaluatorTest extends TestCase
             new DependencyNode($target)
         );
     }
+
+    protected function setUp(): void
+    {
+        ob_start();
+    }
+
+    protected function tearDown(): void
+    {
+        ob_end_clean();
+    }
 }
