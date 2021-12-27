@@ -209,8 +209,9 @@ PHP make (build system make runner/action)
 Usage: pbsmake makefile1 [...makefiles] [target=name] [type=json]
 
 Options:
-  target=name:  Make this target.
-  type=str:     The type of makefile (make/json).
+  target=name:    Make this target.
+  type=str:       The type of makefile (make/json).
+  compat[=bool]:  Enable make compatible mode.
 
 Generic options:
   help:     Show this casual help.
