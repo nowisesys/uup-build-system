@@ -24,9 +24,11 @@ use InvalidArgumentException;
 use ReflectionException;
 use UUP\Application\Command\ApplicationAction;
 use UUP\BuildSystem\Evaluate\NodeEvaluator;
+use UUP\BuildSystem\Evaluate\NodeGraph;
 use UUP\BuildSystem\File\FileReaderInterface;
 use UUP\BuildSystem\File\JsonFileReader;
 use UUP\BuildSystem\File\MakeFileReader;
+use UUP\BuildSystem\Node\DependencyTree;
 
 class MakeCommandAction extends ApplicationAction
 {
@@ -78,6 +80,9 @@ class MakeCommandAction extends ApplicationAction
         if ($this->options->getBoolean('verbose')) {
             $evaluator->setVerbose(true);
         }
+        if ($this->options->getBoolean('debug')) {
+            $this->showNodeGraph($reader->getDependencyTree());
+        }
 
         $evaluator->rebuild();
     }
@@ -96,6 +101,16 @@ class MakeCommandAction extends ApplicationAction
                 return new JsonFileReader();
             default:
                 throw new InvalidArgumentException("Unknown type of file reader");
+        }
+    }
+
+    private function getNodeGraph(DependencyTree $tree): NodeGraph
+    {
+        if ($this->options->hasOption('target')) {
+            $node = $this->options->getString('target');
+            return new NodeGraph($tree->getRegistry()->getNode($node));
+        } else {
+            return new NodeGraph($tree);
         }
     }
 
@@ -135,5 +150,12 @@ class MakeCommandAction extends ApplicationAction
         }
 
         return true;
+    }
+
+    private function showNodeGraph(DependencyTree $tree): void
+    {
+        $graph = $this->getNodeGraph($tree);
+        $graph->rebuild();
+        printf("%s (%s):\n%s\n", $graph->getDescription(), $graph->getName(), $graph->getGraph());
     }
 }
