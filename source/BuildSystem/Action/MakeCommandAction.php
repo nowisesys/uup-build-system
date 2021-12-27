@@ -37,8 +37,9 @@ class MakeCommandAction extends ApplicationAction
         printf("Usage: %s makefile1 [...makefiles] [target=name] [type=json]\n", $this->getScript());
         printf("\n");
         printf("Options:\n");
-        printf("  target=name:  Make this target.\n");
-        printf("  type=str:     The type of makefile (make/json).\n");
+        printf("  target=name:    Make this target.\n");
+        printf("  type=str:       The type of makefile (make/json).\n");
+        printf("  compat[=bool]:  Enable make compatible mode.\n");
         printf("\n");
 
         parent::usage();
@@ -69,7 +70,13 @@ class MakeCommandAction extends ApplicationAction
             $reader->addDependencies($makefile);
         }
 
-        $this->getEvaluator()->rebuild();
+        $evaluator = $this->getEvaluator();
+
+        if ($this->options->getBoolean('compat')) {
+            $evaluator->setRebuildChildren(false);
+        }
+
+        $evaluator->rebuild();
     }
 
     private function getFileReader(): FileReaderInterface
