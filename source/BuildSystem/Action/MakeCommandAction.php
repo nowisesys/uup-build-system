@@ -75,6 +75,9 @@ class MakeCommandAction extends ApplicationAction
         if ($this->options->getBoolean('compat')) {
             $evaluator->setRebuildChildren(false);
         }
+        if ($this->options->getBoolean('verbose')) {
+            $evaluator->setVerbose(true);
+        }
 
         $evaluator->rebuild();
     }

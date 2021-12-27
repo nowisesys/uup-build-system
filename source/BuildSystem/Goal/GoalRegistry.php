@@ -36,7 +36,7 @@ class GoalRegistry
     private array $nodes = [];
 
     /**
-     * Get
+     * Get all nodes in registry.
      * @return array
      */
     public function getNodes(): array

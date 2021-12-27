@@ -34,6 +34,7 @@ use UUP\BuildSystem\Target\TargetInterface;
 class NodeEvaluator implements TargetInterface
 {
     use RebuildChildrenTrait;
+    use VerboseModeTrait;
 
     private NodeInterface $node;
 
@@ -114,6 +115,9 @@ class NodeEvaluator implements TargetInterface
     {
         foreach ($this->getParents() as $parent) {
             if ($parent->getTarget()->isUpdated() == false) {
+                if ($this->isVerbose()) {
+                    $this->onVerbose($parent->getTarget());
+                }
                 $parent->getTarget()->rebuild();
             }
         }
@@ -125,6 +129,9 @@ class NodeEvaluator implements TargetInterface
     private function rebuildTarget()
     {
         if ($this->node->getTarget()->isUpdated() == false) {
+            if ($this->isVerbose()) {
+                $this->onVerbose($this->node->getTarget());
+            }
             $this->node->getTarget()->rebuild();
         }
     }
@@ -138,7 +145,9 @@ class NodeEvaluator implements TargetInterface
             return;
         }
         foreach ($this->node->getChildren() as $child) {
-            $child->getEvaluator()->rebuild();
+            $evaluator = $child->getEvaluator();
+            $evaluator->setVerbose($this->isVerbose());
+            $evaluator->rebuild();
         }
     }
 
