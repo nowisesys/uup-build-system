@@ -37,7 +37,7 @@ class MakeFileRule
      * Constructor.
      * @param string $name The goal name.
      */
-    public function __construct(string $name)
+    public function __construct(string $name = "")
     {
         $this->setName($name);
     }
