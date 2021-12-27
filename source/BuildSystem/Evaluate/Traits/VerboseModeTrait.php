@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace UUP\BuildSystem\Evaluate;
+namespace UUP\BuildSystem\Evaluate\Traits;
 
 use UUP\BuildSystem\Target\TargetInterface;
 

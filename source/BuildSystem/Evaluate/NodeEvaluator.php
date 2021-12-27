@@ -20,8 +20,9 @@ declare(strict_types=1);
 
 namespace UUP\BuildSystem\Evaluate;
 
+use UUP\BuildSystem\Evaluate\Traits\RebuildChildrenTrait;
+use UUP\BuildSystem\Evaluate\Traits\VerboseModeTrait;
 use UUP\BuildSystem\Node\NodeInterface;
-use UUP\BuildSystem\Target\RebuildChildrenTrait;
 use UUP\BuildSystem\Target\TargetInterface;
 
 /**

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace UUP\BuildSystem\Target;
+namespace UUP\BuildSystem\Evaluate\Traits;
 
 /**
  * Defines whether to rebuild child nodes or not.
