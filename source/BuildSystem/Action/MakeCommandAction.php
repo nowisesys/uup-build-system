@@ -66,7 +66,7 @@ class MakeCommandAction extends ApplicationAction
     {
         $reader = $this->getFileReader();
 
-        foreach ($this->options->getOption('makefiles') as $makefile) {
+        foreach ($this->options->getOption('makefiles', []) as $makefile) {
             $reader->addDependencies($makefile);
         }
 
