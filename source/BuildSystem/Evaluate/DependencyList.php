@@ -94,6 +94,15 @@ class DependencyList implements TargetInterface
     }
 
     /**
+     * Get result graph as JSON string.
+     * @return string
+     */
+    public function getGraph(): string
+    {
+        return json_encode($this->result, JSON_PRETTY_PRINT);
+    }
+
+    /**
      * Add child nodes to registry.
      * @param NodeInterface $node
      * @param GoalRegistry $registry

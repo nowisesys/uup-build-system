@@ -23,6 +23,7 @@ namespace UUP\BuildSystem\Action;
 use InvalidArgumentException;
 use ReflectionException;
 use UUP\Application\Command\ApplicationAction;
+use UUP\BuildSystem\Evaluate\DependencyList;
 use UUP\BuildSystem\Evaluate\NodeEvaluator;
 use UUP\BuildSystem\Evaluate\NodeGraph;
 use UUP\BuildSystem\File\FileReaderInterface;
@@ -81,7 +82,7 @@ class MakeCommandAction extends ApplicationAction
             $evaluator->setVerbose(true);
         }
         if ($this->options->getBoolean('debug')) {
-            $this->showNodeGraph($reader->getDependencyTree());
+            $this->showDebugGraph($reader->getDependencyTree());
         }
 
         $evaluator->rebuild();
@@ -111,6 +112,16 @@ class MakeCommandAction extends ApplicationAction
             return new NodeGraph($tree->getRegistry()->getNode($node));
         } else {
             return new NodeGraph($tree);
+        }
+    }
+
+    private function getDependencyList(DependencyTree $tree): DependencyList
+    {
+        if ($this->options->hasOption('target')) {
+            $node = $this->options->getString('target');
+            return new DependencyList($tree->getRegistry()->getNode($node));
+        } else {
+            return new DependencyList($tree);
         }
     }
 
@@ -152,10 +163,15 @@ class MakeCommandAction extends ApplicationAction
         return true;
     }
 
-    private function showNodeGraph(DependencyTree $tree): void
+    private function showDebugGraph(DependencyTree $tree): void
     {
-        $graph = $this->getNodeGraph($tree);
-        $graph->rebuild();
-        printf("%s (%s):\n%s\n", $graph->getDescription(), $graph->getName(), $graph->getGraph());
+        $graph1 = $this->getDependencyList($tree);
+        $graph1->rebuild();
+
+        $graph2 = $this->getNodeGraph($tree);
+        $graph2->rebuild();
+
+        printf("%s (%s):\n%s\n\n", $graph1->getDescription(), $graph1->getName(), $graph1->getGraph());
+        printf("%s (%s):\n%s\n\n", $graph2->getDescription(), $graph2->getName(), $graph2->getGraph());
     }
 }
