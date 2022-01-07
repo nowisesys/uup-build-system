@@ -5,7 +5,7 @@ declare(strict_types=1);
 
 (function () {
     foreach ([
-                 __DIR__ . '/../autoload.php',
+                 __DIR__ . '/../../../autoload.php',
                  __DIR__ . '/../vendor/autoload.php'
              ] as $autoloader) {
         if (file_exists($autoloader)) {
