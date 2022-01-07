@@ -29,6 +29,7 @@ use UUP\BuildSystem\Evaluate\NodeGraph;
 use UUP\BuildSystem\File\FileReaderInterface;
 use UUP\BuildSystem\File\JsonFileReader;
 use UUP\BuildSystem\File\MakeFileReader;
+use UUP\BuildSystem\Generate\TemplateMakefileGenerator;
 use UUP\BuildSystem\Node\DependencyTree;
 
 class MakeCommandAction extends ApplicationAction
@@ -40,9 +41,10 @@ class MakeCommandAction extends ApplicationAction
         printf("Usage: %s makefile1 [...makefiles] [target=name] [type=json]\n", $this->getScript());
         printf("\n");
         printf("Options:\n");
-        printf("  target=name:    Make this target.\n");
-        printf("  type=str:       The type of makefile (make/json).\n");
-        printf("  compat[=bool]:  Enable make compatible mode.\n");
+        printf("  target=name:      Make this target.\n");
+        printf("  type=str:         The type of makefile (make/json).\n");
+        printf("  compat[=bool]:    Enable make compatible mode.\n");
+        printf("  generate[=mode]:  Output template makefile (explicit/implicit).\n");
         printf("\n");
 
         parent::usage();
@@ -53,6 +55,10 @@ class MakeCommandAction extends ApplicationAction
 
     public function setup(): void
     {
+        if ($this->options->hasOption('generate')) {
+            $this->outputTemplateMakefile();
+        }
+
         foreach ($this->options->getOptions() as $file => $args) {
             if ($this->isMakefile($file)) {
                 $this->options->addOption('makefiles', $file);
@@ -173,5 +179,12 @@ class MakeCommandAction extends ApplicationAction
 
         printf("%s (%s):\n%s\n\n", $graph1->getDescription(), $graph1->getName(), $graph1->getGraph());
         printf("%s (%s):\n%s\n\n", $graph2->getDescription(), $graph2->getName(), $graph2->getGraph());
+    }
+
+    private function outputTemplateMakefile(): void
+    {
+        $generator = new TemplateMakefileGenerator($this->options->getString('type', 'make'));
+        $generator->setTargetMode($this->options->getString('generate'));
+        $generator->output();
     }
 }
