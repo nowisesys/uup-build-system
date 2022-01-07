@@ -35,7 +35,7 @@ class MakeCommandAction extends ApplicationAction
 {
     public function usage(): void
     {
-        printf("PHP make (build system make runner/action)\n");
+        printf("PHP make (build system command)\n");
         printf("\n");
         printf("Usage: %s makefile1 [...makefiles] [target=name] [type=json]\n", $this->getScript());
         printf("\n");
@@ -48,7 +48,7 @@ class MakeCommandAction extends ApplicationAction
         parent::usage();
 
         printf("\n");
-        printf("Copyright (C) 2021 Nowise Systems\n");
+        printf("Copyright (C) 2021-%s Nowise Systems\n", date('Y'));
     }
 
     public function setup(): void
