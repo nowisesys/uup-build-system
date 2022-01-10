@@ -65,6 +65,10 @@ class MakeCommandAction extends ApplicationAction
             }
         }
 
+        if ($this->options->isMissing('type')) {
+            $this->options->setOption('type', $this->detectFileReader());
+        }
+
         $this->options->setObject('reader', $this->createFileReader());
     }
 
@@ -109,6 +113,17 @@ class MakeCommandAction extends ApplicationAction
             default:
                 throw new InvalidArgumentException("Unknown type of file reader");
         }
+    }
+
+    private function detectFileReader(): string
+    {
+        foreach ($this->options->getOption('makefiles') as $makefile) {
+            if (preg_match('/\.([^.]+)$/', $makefile, $matches)) {
+                return $matches[1];
+            }
+        }
+
+        return 'make';
     }
 
     private function getNodeGraph(DependencyTree $tree): NodeGraph
