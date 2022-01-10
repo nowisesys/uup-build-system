@@ -8,8 +8,8 @@ use UUP\BuildSystem\Tests\Target;
 
 class T3 extends Target
 {
-    public function __construct()
+    public function __construct(...$params)
     {
-        parent::__construct("T3");
+        parent::__construct("T3", ...$params);
     }
 }
