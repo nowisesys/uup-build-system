@@ -66,6 +66,15 @@ class FileDetector
     }
 
     /**
+     * Check if recursive mode is enabled.
+     * @return bool
+     */
+    public function isRecursive(): bool
+    {
+        return $this->recursive;
+    }
+
+    /**
      * Enable recursive mode.
      * @param bool $enable
      */
