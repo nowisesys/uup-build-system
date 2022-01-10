@@ -18,11 +18,16 @@ possible.
 * Notice that all target classes should return their name.
 
 ```shell
-./vendor/bin/pbsmake generate > makefile.txt
+./vendor/bin/pbsmake generate > build.make
 ```
 
-You can then use the make command (pbsmake) to evaluate targets. Use type=json to work with JSON style makefiles 
-instead.
+You can then use the make command (pbsmake) to evaluate targets. Use type=json if you prefer to work with JSON-style 
+files.
+
+```shell
+./vendor/bin/pbsmake generate=implicit type=json > build.json
+./vendor/bin/pbsmake build.json
+```
 
 #### PROGRAMMATICALLY
 
@@ -150,6 +155,12 @@ declared in the make file, use fully qualified class name if present in some oth
 
 Implicit target will get the list of dependencies passed as constructor arguments. For example, the T5 class will be
 constructed with ("T2", "T3") as constructor arguments.
+
+#### PROBING:
+
+Invoking the pbsmake-command without a list of makefiles will cause script to probe current directory for some standard 
+named files: `build.make`, `build.json`, `makefile`, `makefile.txt` and `*.pbs`. The default type is assumed 
+to be makefiles.
 
 ### EVALUATION:
 
