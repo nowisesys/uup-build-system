@@ -26,6 +26,7 @@ use UUP\Application\Command\ApplicationAction;
 use UUP\BuildSystem\Evaluate\DependencyList;
 use UUP\BuildSystem\Evaluate\NodeEvaluator;
 use UUP\BuildSystem\Evaluate\NodeGraph;
+use UUP\BuildSystem\File\FileDetector;
 use UUP\BuildSystem\File\FileReaderInterface;
 use UUP\BuildSystem\File\JsonFileReader;
 use UUP\BuildSystem\File\MakeFileReader;
@@ -65,8 +66,17 @@ class MakeCommandAction extends ApplicationAction
             }
         }
 
+        if ($this->options->getOption('makefiles', []) == []) {
+            $this->options->setOption('makefiles', $this->detectMakeFiles());
+        }
+
         if ($this->options->isMissing('type')) {
             $this->options->setOption('type', $this->detectFileReader());
+        }
+
+        if ($this->options->getOption('type', 'make') == 'pbs' ||
+            $this->options->getOption('type', 'make') == 'txt') {
+            $this->options->setOption('type', 'make');
         }
 
         $this->options->setObject('reader', $this->createFileReader());
@@ -96,6 +106,13 @@ class MakeCommandAction extends ApplicationAction
         }
 
         $evaluator->rebuild();
+    }
+
+    public function getVersion(): string
+    {
+        return json_decode(
+            file_get_contents(__DIR__ . '/../../../composer.json')
+        )->version;
     }
 
     private function getFileReader(): FileReaderInterface
@@ -203,10 +220,8 @@ class MakeCommandAction extends ApplicationAction
         $generator->output();
     }
 
-    public function getVersion(): string
+    private function detectMakeFiles(): array
     {
-        return json_decode(
-            file_get_contents(__DIR__ . '/../../../composer.json')
-        )->version;
+        return (new FileDetector())->getMakefiles();
     }
 }
