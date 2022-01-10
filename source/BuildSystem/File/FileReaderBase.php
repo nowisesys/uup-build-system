@@ -92,14 +92,14 @@ abstract class FileReaderBase implements FileReaderInterface
             $options['class'] = $target;
         }
         if (!isset($options['arguments'])) {
-            $options['arguments'] = implode(" ", $options['dependencies']);
+            $options['arguments'] = $options['dependencies'];
         }
 
         /** @noinspection PhpParamsInspection */
 
         return new GoalDefinition(
             $this->getReflectionClass($options['class'])
-                ->newInstance($options['arguments']),
+                ->newInstance(...$options['arguments']),
             $options['dependencies']
         );
     }
