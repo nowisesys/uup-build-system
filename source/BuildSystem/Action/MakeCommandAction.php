@@ -46,7 +46,7 @@ class MakeCommandAction extends ApplicationAction
         printf("  type=str:         The type of makefile (make/json).\n");
         printf("  compat[=bool]:    Enable make compatible mode.\n");
         printf("  generate[=mode]:  Output template makefile (explicit/implicit).\n");
-        printf("  recursive:        Recursive scan for makefiles.\n");
+        printf("  recursive:        Recursive scan for makefiles (-r).\n");
         printf("\n");
 
         parent::usage();
@@ -57,6 +57,10 @@ class MakeCommandAction extends ApplicationAction
 
     public function setup(): void
     {
+        if ($this->options->hasOption('r')) {
+            $this->options->setOption('recursive', true);
+        }
+
         if ($this->options->hasOption('generate')) {
             $this->outputTemplateMakefile();
         }

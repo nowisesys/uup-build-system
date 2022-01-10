@@ -162,6 +162,8 @@ Invoking the pbsmake-command without a list of makefiles will cause script to pr
 named files: `build.make`, `build.json`, `makefile`, `makefile.txt` and `*.pbs`. The default type is assumed 
 to be makefiles.
 
+Pass recursive option (-r) to enable recursive scan for makefiles starting in current directory.
+
 ### EVALUATION:
 
 The tree is usually completely rebuilt by evaluating its root node:
