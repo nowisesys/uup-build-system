@@ -30,14 +30,16 @@ class Target implements TargetInterface
 {
     private string $name;
     private bool $updated = false;
+    private array $params;
 
     /**
      * Constructor.
-     * @param string $name The target name.
+     * @param mixed $name The target name.
      */
-    public function __construct(string $name)
+    public function __construct($name = '', ...$params)
     {
         $this->name = $name;
+        $this->params = $params;
     }
 
     /**
@@ -45,7 +47,7 @@ class Target implements TargetInterface
      */
     public function isUpdated(): bool
     {
-        printf("Called isUpdated() on %s (updated=%b)\n", $this->name, $this->updated);
+        printf("Called isUpdated() on %s (updated=%b) (%s)\n", $this->name, $this->updated, json_encode($this->params));
         return $this->updated;
     }
 
