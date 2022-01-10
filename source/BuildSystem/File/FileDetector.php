@@ -22,15 +22,21 @@ namespace UUP\BuildSystem\File;
 
 use DirectoryIterator;
 use Generator;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 use RegexIterator;
 
 class FileDetector
 {
     /**
-     * @var RegexIterator The directory iterator.
+     * @var string The directory root.
      */
-    private RegexIterator $iterator;
+    private string $directory;
 
+    /**
+     * @var bool Enable recursive mode.
+     */
+    private bool $recursive = false;
 
     /**
      * Constructor.
@@ -38,11 +44,34 @@ class FileDetector
      */
     public function __construct(string $directory = ".")
     {
-        $this->iterator = new RegexIterator(
-            new DirectoryIterator($directory),
-            '/(build\.(make|json)|makefile(\.txt)*|.*\.pbs)$/',
-            RegexIterator::MATCH
-        );
+        $this->directory = $directory;
+    }
+
+    /**
+     * Get directory root.
+     * @return string
+     */
+    public function getDirectory(): string
+    {
+        return $this->directory;
+    }
+
+    /**
+     * Set directory root.
+     * @param string $directory
+     */
+    public function setDirectory(string $directory): void
+    {
+        $this->directory = $directory;
+    }
+
+    /**
+     * Enable recursive mode.
+     * @param bool $enable
+     */
+    public function setRecursive(bool $enable = true): void
+    {
+        $this->recursive = $enable;
     }
 
     /**
@@ -51,7 +80,7 @@ class FileDetector
      */
     public function getGenerator(): Generator
     {
-        foreach ($this->iterator as $info) {
+        foreach ($this->getRegexIterator() as $info) {
             yield $info->getPathname();
         }
     }
@@ -63,5 +92,46 @@ class FileDetector
     public function getMakefiles(): array
     {
         return iterator_to_array($this->getGenerator());
+    }
+
+    /**
+     * The directory iterator.
+     * @return RegexIterator
+     */
+    private function getRegexIterator(): RegexIterator
+    {
+        if ($this->recursive) {
+            return $this->getRecursiveModeIterator();
+        } else {
+            return $this->getDirectoryModeIterator();
+        }
+    }
+
+    /**
+     * The recursive directory iterator.
+     * @return RegexIterator
+     */
+    private function getRecursiveModeIterator(): RegexIterator
+    {
+        return new RegexIterator(
+            new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($this->directory)
+            ),
+            '/\/(build\.(make|json)|makefile(\.txt)*|.*\.pbs)$/',
+            RegexIterator::MATCH
+        );
+    }
+
+    /**
+     * Get current directory iterator.
+     * @return RegexIterator
+     */
+    private function getDirectoryModeIterator(): RegexIterator
+    {
+        return new RegexIterator(
+            new DirectoryIterator($this->directory),
+            '/^(build\.(make|json)|makefile(\.txt)*|.*\.pbs)$/',
+            RegexIterator::MATCH
+        );
     }
 }
