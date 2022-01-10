@@ -117,7 +117,7 @@ class MakeCommandAction extends ApplicationAction
 
     private function detectFileReader(): string
     {
-        foreach ($this->options->getOption('makefiles') as $makefile) {
+        foreach ($this->options->getOption('makefiles', []) as $makefile) {
             if (preg_match('/\.([^.]+)$/', $makefile, $matches)) {
                 return $matches[1];
             }
