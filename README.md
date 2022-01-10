@@ -83,11 +83,14 @@ T6 : T4
 T7 : T5
 	Target("T7")
 T8 : T5
-	Target("T8")
+	Target("T8", 123, true)
 ```
 
 As usual, the left-hand side is the rule target and right-hand side list dependencies. The Target class implements 
 the PHP code to execute for that rule target. The T5 target depends on T2 and T3, while T6 and T7 both depends on T5.
+
+The target class will be constructed with variadic number of arguments. It's thus possible to use the same target class
+in multiple rules and define different behavior from arguments.
 
 In reality, the Target class will be replaced by different classes. This is just an example makefile purely for 
 testing.
@@ -124,8 +127,11 @@ Each T* class is present in this test namespace and can be tested with:
 ./vendor/bin/pbsmake example/file/implicit.make target=T3
 ```
 
-It's possible to mix rules that uses implicit/explicit target classes. Classes don't have to be defined in the 
-namespace declared in the make file, use fully qualified class name if present in some other namespace.
+It's possible to mix rules with implicit/explicit target classes. Classes don't have to be defined in the namespace 
+declared in the make file, use fully qualified class name if present in some other namespace. 
+
+Implicit target will get the list of dependencies passed as constructor arguments. For example, the T5 class will be
+constructed with ("T2", "T3") as constructor arguments.
 
 ### EVALUATION:
 
@@ -204,18 +210,21 @@ Multiple makefiles can be processed. Currently, a limitation is that all makefil
 
 ```shell
 ./vendor/bin/pbsmake -h
-PHP make (build system make runner/action)
+PHP make (build system command)
 
 Usage: pbsmake makefile1 [...makefiles] [target=name] [type=json]
 
 Options:
-  target=name:    Make this target.
-  type=str:       The type of makefile (make/json).
-  compat[=bool]:  Enable make compatible mode.
+  target=name:      Make this target.
+  type=str:         The type of makefile (make/json).
+  compat[=bool]:    Enable make compatible mode.
+  generate[=mode]:  Output template makefile (explicit/implicit).
 
 Generic options:
   help:     Show this casual help.
   verbose:  Run in verbose mode.
   quiet:    Run in quiet mode.
   debug:    Enable debug output.
+
+Copyright (C) 2021-2022 Nowise Systems
 ```
