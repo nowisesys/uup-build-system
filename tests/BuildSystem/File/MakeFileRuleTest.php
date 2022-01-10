@@ -23,8 +23,8 @@ class MakeFileRuleTest extends TestCase
     public function testSetArguments()
     {
         $rule = new MakeFileRule();
-        $rule->setArguments("v1 v2");
-        $this->assertEquals("v1 v2", $rule->getDefinition()['arguments']);
+        $rule->setArguments(["v1", "v2"]);
+        $this->assertEquals(["v1", "v2"], $rule->getDefinition()['arguments']);
     }
 
     public function testSetClass()
@@ -47,7 +47,7 @@ class MakeFileRuleTest extends TestCase
         $this->assertEquals([
             'name' => '',
             'class' => '',
-            'arguments' => '',
+            'arguments' => [],
             'dependencies' => []
         ], $rule->getDefinition());
     }

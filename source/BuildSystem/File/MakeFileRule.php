@@ -29,7 +29,7 @@ class MakeFileRule
     private array $definition = [
         'name' => '',
         'class' => '',
-        'arguments' => '',
+        'arguments' => [],
         'dependencies' => []
     ];
 
@@ -71,9 +71,9 @@ class MakeFileRule
 
     /**
      * Set constructor argument for class.
-     * @param string $arguments
+     * @param array $arguments
      */
-    public function setArguments(string $arguments): void
+    public function setArguments(array $arguments): void
     {
         $this->definition['arguments'] = $arguments;
     }
