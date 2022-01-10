@@ -3,10 +3,28 @@
 A build system similar to make with complex dependency tree. Declare goals (target and dependencies) 
 and evaluate the dependency tree to rebuild targets in correct order.
 
-Goals are either defined programmatically in code or declared in one or more files. The remaining job for
+Goals are **either** defined _programmatically in code_ or declared in _one or more make-files_. The remaining job for
 users are to implement the target interface with some concrete actions.
 
 ### GETTING STARTED:
+
+It's recommended to work with files, even though this README tries to completely describe both modes as simple as 
+possible.
+
+#### GENERATE FILES
+
+* Generate one or more make files using the `generate` option.
+* Changing default namespace and add target classes.
+* Notice that all target classes should return their name.
+
+```shell
+./vendor/bin/pbsmake generate > makefile.txt
+```
+
+You can then use the make command (pbsmake) to evaluate targets. Use type=json to work with JSON style makefiles 
+instead.
+
+#### PROGRAMMATICALLY
 
 * Begin by creating a dependency tree.
 * Add one or more goal definitions. A goal definition consists of the target (code to run) and a list of dependencies.
