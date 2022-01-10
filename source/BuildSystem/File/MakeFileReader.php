@@ -75,9 +75,9 @@ class MakeFileReader extends FileReaderBase implements FileReaderInterface
                 $this->setOptions($matches[1], $matches[2]);
             } elseif (preg_match('/^(\w+)\s*:\s*(.*)/', $line, $matches)) {
                 $this->setRule($matches[1], $matches[2]);
-                $this->setTarget($matches[1], $matches[2]);     // implicit defined target
+                $this->setTarget($matches[1], $matches[2]);   // implicit defined target
                 $result['targets'][$this->rule->getName()] = $this->rule->getDefinition();
-            } elseif (preg_match('/^\t(.*)\("(.*)"\)/', $line, $matches)) {
+            } elseif (preg_match('/^\t(.*)\((.*)\)/', $line, $matches)) {
                 $this->setTarget($matches[1], $matches[2]);
                 $result['targets'][$this->rule->getName()] = $this->rule->getDefinition();
             }
@@ -139,6 +139,19 @@ class MakeFileReader extends FileReaderBase implements FileReaderInterface
     private function setTarget(string $class, string $arguments): void
     {
         $this->rule->setClass($class);
-        $this->rule->setArguments($arguments);
+        $this->rule->setArguments($this->getArguments($arguments));
+    }
+
+    /**
+     * Split arguments string.
+     * @param string $arguments The arguments string.
+     * @return array
+     */
+    private function getArguments(string $arguments): array
+    {
+        $parser = new TargetArguments();
+        $parser->parseString($arguments);
+
+        return $parser->getArguments();
     }
 }
