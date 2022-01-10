@@ -34,9 +34,10 @@ class Target implements TargetInterface
 
     /**
      * Constructor.
-     * @param mixed $name The target name.
+     * @param string $name The target name.
+     * @param array $params Optional target arguments.
      */
-    public function __construct($name = '', ...$params)
+    public function __construct(string $name, ...$params)
     {
         $this->name = $name;
         $this->params = $params;
