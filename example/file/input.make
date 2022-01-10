@@ -20,4 +20,4 @@ T6 : T4
 T7 : T5
 	Target("T7")
 T8 : T5
-	Target("T8")
+	Target("T8", 123, true)

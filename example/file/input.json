@@ -5,33 +5,43 @@
     "targets": {
         "T1": {
             "class": "Target",
-            "arguments": "T1",
+            "arguments": [
+                "T1"
+            ],
             "dependencies": []
         },
         "T2": {
             "class": "Target",
-            "arguments": "T2",
+            "arguments": [
+                "T2"
+            ],
             "dependencies": [
                 "T1"
             ]
         },
         "T3": {
             "class": "Target",
-            "arguments": "T3",
+            "arguments": [
+                "T3"
+            ],
             "dependencies": [
                 "T1"
             ]
         },
         "T4": {
             "class": "Target",
-            "arguments": "T4",
+            "arguments": [
+                "T4"
+            ],
             "dependencies": [
                 "T2"
             ]
         },
         "T5": {
             "class": "Target",
-            "arguments": "T5",
+            "arguments": [
+                "T5"
+            ],
             "dependencies": [
                 "T2",
                 "T3"
@@ -39,21 +49,29 @@
         },
         "T6": {
             "class": "Target",
-            "arguments": "T6",
+            "arguments": [
+                "T6"
+            ],
             "dependencies": [
                 "T4"
             ]
         },
         "T7": {
             "class": "Target",
-            "arguments": "T7",
+            "arguments": [
+                "T7"
+            ],
             "dependencies": [
                 "T5"
             ]
         },
         "T8": {
             "class": "Target",
-            "arguments": "T8",
+            "arguments": [
+                "T8",
+                123,
+                true
+            ],
             "dependencies": [
                 "T5"
             ]
