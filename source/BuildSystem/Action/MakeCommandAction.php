@@ -202,4 +202,11 @@ class MakeCommandAction extends ApplicationAction
         $generator->setTargetMode($this->options->getString('generate'));
         $generator->output();
     }
+
+    public function getVersion(): string
+    {
+        return json_decode(
+            file_get_contents(__DIR__ . '/../../../composer.json')
+        )->version;
+    }
 }
