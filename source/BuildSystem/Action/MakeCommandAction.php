@@ -95,6 +95,9 @@ class MakeCommandAction extends ApplicationAction
         $reader = $this->getFileReader();
 
         foreach ($this->options->getOption('makefiles', []) as $makefile) {
+            if ($this->options->getBoolean('verbose')) {
+                printf("Add dependencies from %s\n", $makefile);
+            }
             $reader->addDependencies($makefile);
         }
 
