@@ -223,6 +223,8 @@ class MakeCommandAction extends ApplicationAction
         $generator = new TemplateMakefileGenerator($this->options->getString('type', 'make'));
         $generator->setTargetMode($this->options->getString('generate'));
         $generator->output();
+
+        exit(0);
     }
 
     private function detectMakeFiles(): array
