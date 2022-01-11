@@ -22,6 +22,7 @@ namespace UUP\BuildSystem\File;
 
 use ReflectionException;
 use RuntimeException;
+use UUP\Application\Convert\Boolean;
 
 /**
  * The GNU makefile reader.
@@ -47,6 +48,12 @@ class MakeFileReader extends FileReaderBase implements FileReaderInterface
         }
         if (array_key_exists('targets', $content)) {
             $this->addTargets($content['targets']);
+        }
+        if (array_key_exists('debug', $content)) {
+            $this->setDebug(Boolean::convert($content['debug']));
+        }
+        if (array_key_exists('verbose', $content)) {
+            $this->setVerbose(Boolean::convert($content['verbose']));
         }
     }
 
@@ -110,6 +117,12 @@ class MakeFileReader extends FileReaderBase implements FileReaderInterface
         switch ($key) {
             case 'NAMESPACE':
                 $this->setNamespace($value);
+                break;
+            case 'DEBUG':
+                $this->setDebug(Boolean::convert($value));
+                break;
+            case 'VERBOSE':
+                $this->setVerbose(Boolean::convert($value));
                 break;
             default:
                 // ignored right now

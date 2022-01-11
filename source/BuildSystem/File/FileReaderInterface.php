@@ -59,4 +59,18 @@ interface FileReaderInterface
      * @param string $namespace
      */
     public function setNamespace(string $namespace): void;
+
+    /**
+     * Set debug mode (PBS_MAKE_DEBUG).
+     * @param bool $enable
+     * @return void
+     */
+    public function setDebug(bool $enable = true): void;
+
+    /**
+     * Set verbose mode (PBS_MAKE_VERBOSE).
+     * @param bool $enable
+     * @return void
+     */
+    public function setVerbose(bool $enable = true): void;
 }

@@ -80,6 +80,22 @@ abstract class FileReaderBase implements FileReaderInterface
     }
 
     /**
+     * @inheritdoc
+     */
+    public function setDebug(bool $enable = true): void
+    {
+        $_ENV['PBS_MAKE_DEBUG'] = $enable;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setVerbose(bool $enable = true): void
+    {
+        $_ENV['PBS_MAKE_VERBOSE'] = $enable;
+    }
+
+    /**
      * Creates a goal definition object.
      * @throws ReflectionException
      */

@@ -22,6 +22,7 @@ namespace UUP\BuildSystem\File;
 
 use ReflectionException;
 use RuntimeException;
+use UUP\Application\Convert\Boolean;
 
 /**
  * The JSON file reader.
@@ -57,6 +58,12 @@ class JsonFileReader extends FileReaderBase implements FileReaderInterface
         }
         if (array_key_exists('targets', $content)) {
             $this->addTargets($content['targets']);
+        }
+        if (array_key_exists('debug', $content)) {
+            $this->setDebug(Boolean::convert($content['debug']));
+        }
+        if (array_key_exists('verbose', $content)) {
+            $this->setVerbose(Boolean::convert($content['verbose']));
         }
     }
 
