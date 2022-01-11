@@ -164,6 +164,20 @@ to be makefiles.
 
 Pass recursive option (-r) to enable recursive scan for makefiles starting in current directory.
 
+#### VERBOSE & DEBUG:
+
+The superglobal environment (`$_ENV`) gets populated with DEBUG and VERBOSE values from make files.
+
+```php
+Array
+(
+    [PBS_MAKE_VERBOSE] => 1
+    [PBS_MAKE_DEBUG] => 1
+)
+```
+
+For convenience, either true/false, yes/no, on/off and 0/1 are recognised as boolean value.
+
 ### EVALUATION:
 
 The tree is usually completely rebuilt by evaluating its root node:
@@ -250,9 +264,11 @@ Options:
   type=str:         The type of makefile (make/json).
   compat[=bool]:    Enable make compatible mode.
   generate[=mode]:  Output template makefile (explicit/implicit).
+  recursive:        Recursive scan for makefiles (-r).
 
 Generic options:
   help:     Show this casual help.
+  version:  Show version information.
   verbose:  Run in verbose mode.
   quiet:    Run in quiet mode.
   debug:    Enable debug output.
