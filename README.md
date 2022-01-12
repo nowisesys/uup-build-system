@@ -178,6 +178,67 @@ Array
 
 For convenience, either true/false, yes/no, on/off and 0/1 are recognised as boolean value.
 
+#### PHONY TARGETS:
+
+Phony target function as virtual dependencies for zero or more real targets. It's easiest to explain this with an
+simple example.
+
+Let's say that we define this list of phony targets:
+
+```makefile
+PHONY := all clean dist-clean
+```
+
+We can then i.e. set T1 and T2 to depend on the phony `all` target:
+
+```makefile
+T1 : all
+T2 : all
+T3 : T1
+T4 : T2
+T5 : T2 T3
+```
+
+Evaluate the dependency tree starting from the builtin root-node will list:
+
+```shell
+./vendor/bin/pbsmake example/file/implicit.make -d target=root
+  ...
+Evaluate node tree structure (graph):
+{
+    "all": {
+        "T1": {
+            "T3": {
+                "T5": []
+            }
+        },
+        "T2": {
+            "T4": [],
+            "T5": []
+        }
+    },
+    "clean": [],
+    "dist-clean": []
+}
+  ...
+```
+
+As expected, both T1 and T2 are immediate child of the phony target `all`. Evaluating target all will rebuild both of 
+them along with their dependencies.
+
+```shell
+./vendor/bin/pbsmake example/file/implicit.make -v target=all
+  ...
+Add dependencies from example/file/implicit.make
+Making all (Phony target for all)
+  ...
+```
+
+**Notice:** 
+
+If `target` option isn't specified, then the builtin `root` target will be evaluated. In the example above, 
+it will cause `clean` and `dist-clean` to be evaluated too.
+
 ### EVALUATION:
 
 The tree is usually completely rebuilt by evaluating its root node:
