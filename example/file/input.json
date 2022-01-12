@@ -1,6 +1,11 @@
 {
     "verbose": true,
     "debug": true,
+    "phony": [
+        "all",
+        "clean",
+        "dist-clean"
+    ],
     "namespace": "UUP\\BuildSystem\\Tests",
     "targets": {
         "T1": {

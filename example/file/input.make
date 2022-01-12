@@ -1,7 +1,8 @@
 # Makefile
 
 VERBOSE	:= true
-DEBUG 	:= true
+DEBUG	:= true
+PHONY	:= all clean dist-clean
 
 NAMESPACE := UUP\BuildSystem\Tests
 
