@@ -31,26 +31,42 @@ class TargetPhony implements TargetInterface
      */
     private string $name;
 
+    /**
+     * Constructor.
+     * @param string $name The target name.
+     */
     public function __construct(string $name)
     {
         $this->name = $name;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function isUpdated(): bool
     {
         return false;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function rebuild(): void
     {
         // ignore
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getName(): string
     {
         return $this->name;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getDescription(): string
     {
         return sprintf("Phony target for %s", $this->name);
