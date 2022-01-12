@@ -63,14 +63,18 @@ interface FileReaderInterface
     /**
      * Set debug mode (PBS_MAKE_DEBUG).
      * @param bool $enable
-     * @return void
      */
     public function setDebug(bool $enable = true): void;
 
     /**
      * Set verbose mode (PBS_MAKE_VERBOSE).
      * @param bool $enable
-     * @return void
      */
     public function setVerbose(bool $enable = true): void;
+
+    /**
+     * Define names as phony (virtual) targets.
+     * @param array $names The target names.
+     */
+    public function addPhonyTargets(array $names): void;
 }

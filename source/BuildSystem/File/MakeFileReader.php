@@ -65,6 +65,7 @@ class MakeFileReader extends FileReaderBase implements FileReaderInterface
      *
      * @param string $filename The filename path.
      * @return array
+     * @throws ReflectionException
      */
     private function getMakeContent(string $filename): array
     {
@@ -111,6 +112,7 @@ class MakeFileReader extends FileReaderBase implements FileReaderInterface
      * Set option from makefile content.
      * @param string $key The option key.
      * @param string $value The option value.
+     * @throws ReflectionException
      */
     private function setOptions(string $key, string $value): void
     {
@@ -124,6 +126,8 @@ class MakeFileReader extends FileReaderBase implements FileReaderInterface
             case 'VERBOSE':
                 $this->setVerbose(Boolean::convert($value));
                 break;
+            case 'PHONY':
+                $this->addPhonyTargets(preg_split('/\s+/', $value));
             default:
                 // ignored right now
         }

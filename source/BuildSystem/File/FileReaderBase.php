@@ -25,6 +25,7 @@ use ReflectionClass;
 use ReflectionException;
 use UUP\BuildSystem\Goal\GoalDefinition;
 use UUP\BuildSystem\Node\DependencyTree;
+use UUP\BuildSystem\Target\TargetPhony;
 
 /**
  * Base class for file readers.
@@ -93,6 +94,22 @@ abstract class FileReaderBase implements FileReaderInterface
     public function setVerbose(bool $enable = true): void
     {
         $_ENV['PBS_MAKE_VERBOSE'] = $enable;
+    }
+
+    /**
+     * @inheritdoc
+     * @throws ReflectionException
+     */
+    public function addPhonyTargets(array $names): void
+    {
+        foreach ($names as $name) {
+            $definition = $this->getGoalDefinition($name, [
+                'class' => TargetPhony::class,
+                'arguments' => [$name],
+                'dependencies' => []
+            ]);
+            $this->dependencyTree->addDefinition($definition);
+        }
     }
 
     /**

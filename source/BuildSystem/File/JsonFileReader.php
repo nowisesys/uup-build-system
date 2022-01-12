@@ -65,6 +65,9 @@ class JsonFileReader extends FileReaderBase implements FileReaderInterface
         if (array_key_exists('verbose', $content)) {
             $this->setVerbose(Boolean::convert($content['verbose']));
         }
+        if (array_key_exists('phony', $content)) {
+            $this->addPhonyTargets($content['phony']);
+        }
     }
 
     /**
