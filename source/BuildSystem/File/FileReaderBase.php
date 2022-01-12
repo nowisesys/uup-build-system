@@ -26,6 +26,7 @@ use ReflectionException;
 use UUP\BuildSystem\Goal\GoalDefinition;
 use UUP\BuildSystem\Node\DependencyTree;
 use UUP\BuildSystem\Target\TargetPhony;
+use UUP\BuildSystem\Target\TargetShell;
 
 /**
  * Base class for file readers.
@@ -126,6 +127,10 @@ abstract class FileReaderBase implements FileReaderInterface
         }
         if (!isset($options['arguments'])) {
             $options['arguments'] = $options['dependencies'];
+        }
+        
+        if ($options['class'] == "Shell") {
+            $options['class'] = TargetShell::class;
         }
 
         /** @noinspection PhpParamsInspection */
