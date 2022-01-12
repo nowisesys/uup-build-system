@@ -1,6 +1,6 @@
 {
     "name": "nowise/uup-build-system",
-    "version": "1.4.2",
+    "version": "1.4.3",
     "description": "Target build system similar to make with complex dependency tree",
     "type": "library",
     "keywords": [
