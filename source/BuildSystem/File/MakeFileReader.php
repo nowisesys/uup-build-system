@@ -85,7 +85,7 @@ class MakeFileReader extends FileReaderBase implements FileReaderInterface
                 $this->setRule($matches[1], $matches[2]);
                 $this->setTarget($matches[1], $matches[2]);   // implicit defined target
                 $result['targets'][$this->rule->getName()] = $this->rule->getDefinition();
-            } elseif (preg_match('/^\t(.*)\((.*)\)/', $line, $matches)) {
+            } elseif (preg_match('/^\t(.*?)\((.*)\)/', $line, $matches)) {
                 $this->setTarget($matches[1], $matches[2]);
                 $result['targets'][$this->rule->getName()] = $this->rule->getDefinition();
             }
