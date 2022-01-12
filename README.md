@@ -255,6 +255,14 @@ clean:
     Shell("@(find -name *.tmp -type f | xargs rm -f)")
 ```
 
+Another task is to run arbitrary PHP code. Supplied code will be executed using `eval()`, make sure to not use this
+feature with external input.
+
+```makefile
+finished:
+    Call("printf('Finished build at %s!\n', strftime('%c'));")
+```
+
 See the unit tests for further examples.
 
 ### EVALUATION:
