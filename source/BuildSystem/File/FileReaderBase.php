@@ -105,7 +105,7 @@ abstract class FileReaderBase implements FileReaderInterface
     {
         foreach ($names as $name) {
             $definition = $this->getGoalDefinition($name, [
-                'class' => TargetPhony::class,
+                'class' => 'Phony',
                 'arguments' => [$name],
                 'dependencies' => []
             ]);
@@ -128,9 +128,12 @@ abstract class FileReaderBase implements FileReaderInterface
         if (!isset($options['arguments'])) {
             $options['arguments'] = $options['dependencies'];
         }
-        
+
         if ($options['class'] == "Shell") {
             $options['class'] = TargetShell::class;
+        }
+        if ($options['class'] == "Phony") {
+            $options['class'] = TargetPhony::class;
         }
 
         /** @noinspection PhpParamsInspection */
