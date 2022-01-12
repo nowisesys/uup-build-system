@@ -81,7 +81,7 @@ $reader->getDependencyTree()
 Currently, [GNU makefile](example/file/input.make) or [JSON](example/file/input.json) is the
 supported file formats.
 
-#### MAKEFILE:
+#### MAKEFILE
 
 An example of makefile declaration is this:
 
@@ -118,12 +118,12 @@ in multiple rules and define different behavior from arguments.
 In reality, the Target class will be replaced by different classes. This is just an example makefile purely for 
 testing.
 
-#### NAMESPACES:
+#### NAMESPACES
 
 The default namespace is declared in the makefile. If classes is placed in multiple namespaces, either 
 declare them fully qualified or split declarations in multiple file, each with their own default namespace.
 
-#### IMPLICIT:
+#### IMPLICIT
 
 Target classes can be deduced from make rule (in Makefile or JSON file). In this case, the left-/right-hand target 
 should be a class. The example Makefile above then becomes:
@@ -156,7 +156,7 @@ declared in the make file, use fully qualified class name if present in some oth
 Implicit target will get the list of dependencies passed as constructor arguments. For example, the T5 class will be
 constructed with ("T2", "T3") as constructor arguments.
 
-#### PROBING:
+#### PROBING
 
 Invoking the pbsmake-command without a list of makefiles will cause script to probe current directory for some standard 
 named files: `build.make`, `build.json`, `makefile`, `makefile.txt` and `*.pbs`. The default type is assumed 
@@ -164,7 +164,7 @@ to be makefiles.
 
 Pass recursive option (-r) to enable recursive scan for makefiles starting in current directory.
 
-#### VERBOSE & DEBUG:
+#### VERBOSE & DEBUG
 
 The superglobal environment (`$_ENV`) gets populated with DEBUG and VERBOSE values from make files.
 
@@ -178,7 +178,7 @@ Array
 
 For convenience, either true/false, yes/no, on/off and 0/1 are recognised as boolean value.
 
-#### PHONY TARGETS:
+#### PHONY TARGETS
 
 Phony target function as virtual dependencies for zero or more real targets. It's easiest to explain this with an
 simple example.
@@ -238,6 +238,24 @@ Making all (Phony target for all)
 
 If `target` option isn't specified, then the builtin `root` target will be evaluated. In the example above, 
 it will cause `clean` and `dist-clean` to be evaluated too.
+
+#### SPECIAL TARGETS
+
+One common task is to execute shell commands. A builtin target exists for this:
+
+```makefile
+clean:
+    Shell("find -name *.tmp -type f | xargs rm -f")
+```
+
+Wrap commands within `@(...)` to suppress output.
+
+```makefile
+clean:
+    Shell("@(find -name *.tmp -type f | xargs rm -f)")
+```
+
+See the unit tests for further examples.
 
 ### EVALUATION:
 
