@@ -53,20 +53,20 @@ class JsonFileReader extends FileReaderBase implements FileReaderInterface
 
         $content = $this->getJsonContent($filename);
 
+        if (array_key_exists('verbose', $content)) {
+            $this->setVerbose(Boolean::convert($content['verbose']));
+        }
+        if (array_key_exists('debug', $content)) {
+            $this->setDebug(Boolean::convert($content['debug']));
+        }
+        if (array_key_exists('phony', $content)) {
+            $this->addPhonyTargets($content['phony']);
+        }
         if (array_key_exists('namespace', $content)) {
             $this->setNamespace($content['namespace']);
         }
         if (array_key_exists('targets', $content)) {
             $this->addTargets($content['targets']);
-        }
-        if (array_key_exists('debug', $content)) {
-            $this->setDebug(Boolean::convert($content['debug']));
-        }
-        if (array_key_exists('verbose', $content)) {
-            $this->setVerbose(Boolean::convert($content['verbose']));
-        }
-        if (array_key_exists('phony', $content)) {
-            $this->addPhonyTargets($content['phony']);
         }
     }
 
