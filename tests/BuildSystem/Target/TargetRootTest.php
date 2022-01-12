@@ -9,26 +9,26 @@ class TargetRootTest extends TestCase
 {
     public function testGetName()
     {
-        $root = new TargetRoot();
-        $this->assertEquals("root", $root->getName());
+        $target = new TargetRoot();
+        $this->assertEquals("root", $target->getName());
     }
 
     public function testGetDescription()
     {
-        $root = new TargetRoot();
-        $this->assertEquals("The target for root node", $root->getDescription());
+        $target = new TargetRoot();
+        $this->assertEquals("The target for root node", $target->getDescription());
     }
 
     public function testIsUpdated()
     {
-        $root = new TargetRoot();
-        $this->assertTrue($root->isUpdated());
+        $target = new TargetRoot();
+        $this->assertTrue($target->isUpdated());
     }
 
     public function testRebuild()
     {
-        $root = new TargetRoot();
-        $root->rebuild();
+        $target = new TargetRoot();
+        $target->rebuild();
         $this->assertTrue(true);
     }
 }
