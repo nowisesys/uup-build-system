@@ -25,6 +25,7 @@ use ReflectionClass;
 use ReflectionException;
 use UUP\BuildSystem\Goal\GoalDefinition;
 use UUP\BuildSystem\Node\DependencyTree;
+use UUP\BuildSystem\Target\TargetCall;
 use UUP\BuildSystem\Target\TargetPhony;
 use UUP\BuildSystem\Target\TargetShell;
 
@@ -134,6 +135,9 @@ abstract class FileReaderBase implements FileReaderInterface
         }
         if ($options['class'] == "Phony") {
             $options['class'] = TargetPhony::class;
+        }
+        if ($options['class'] == "Call") {
+            $options['class'] = TargetCall::class;
         }
 
         /** @noinspection PhpParamsInspection */
