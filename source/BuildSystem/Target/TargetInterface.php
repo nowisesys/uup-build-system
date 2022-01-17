@@ -44,6 +44,12 @@ interface TargetInterface
     public function getName(): string;
 
     /**
+     * Get target type.
+     * @return string
+     */
+    public function getType(): string;
+
+    /**
      * Get target description.
      * @return string
      */

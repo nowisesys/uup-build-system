@@ -29,16 +29,24 @@ use RuntimeException;
 class TargetShell implements TargetInterface
 {
     /**
+     * @var string The target name.
+     */
+    private string $name;
+
+    /**
      * @var string The commands to execute.
      */
     private string $commands;
 
     /**
      * Constructor.
+     *
+     * @param string $name The target name.
      * @param string $commands The commands to execute.
      */
-    public function __construct(string $commands = "")
+    public function __construct(string $name = "", string $commands = "")
     {
+        $this->name = $name;
         $this->commands = $commands;
     }
 
@@ -74,6 +82,14 @@ class TargetShell implements TargetInterface
      * @inheritdoc
      */
     public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getType(): string
     {
         return "shell";
     }

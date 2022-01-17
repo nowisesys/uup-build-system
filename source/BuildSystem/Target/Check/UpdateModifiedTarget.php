@@ -37,4 +37,20 @@ abstract class UpdateModifiedTarget extends LockFileControlledTarget
             $this->getLastRun() > 0 &&
             $this->getLastRun() >= filemtime($this->getFilename());
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getType(): string
+    {
+        return "update-modified";
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getDescription(): string
+    {
+        return "Update when modified target";
+    }
 }

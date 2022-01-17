@@ -36,4 +36,20 @@ abstract class AlwaysBuildTarget extends LockFileControlledTarget
     {
         return false;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getType(): string
+    {
+        return "always-build";
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getDescription(): string
+    {
+        return "Always rebuild target";
+    }
 }

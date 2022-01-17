@@ -64,6 +64,14 @@ class NodeGraph implements TargetInterface
      */
     public function getName(): string
     {
+        return $this->node->getTarget()->getName();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getType(): string
+    {
         return "graph";
     }
 

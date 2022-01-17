@@ -177,6 +177,22 @@ abstract class LockFileControlledTarget implements TargetInterface
     }
 
     /**
+     * @inheritdoc
+     */
+    public function getType(): string
+    {
+        return "lockfile";
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getDescription(): string
+    {
+        return "Lockfile controlled target";
+    }
+
+    /**
      * The action to perform.
      *
      * Implement this method to define the action for your target.

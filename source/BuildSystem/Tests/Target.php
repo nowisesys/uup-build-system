@@ -72,6 +72,14 @@ class Target implements TargetInterface
     /**
      * @inheritdoc
      */
+    public function getType(): string
+    {
+        return "test";
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getDescription(): string
     {
         return sprintf("Example target %s", $this->name);

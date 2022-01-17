@@ -55,6 +55,14 @@ class TargetRoot implements TargetInterface
     /**
      * @inheritdoc
      */
+    public function getType(): string
+    {
+        return "root";
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getDescription(): string
     {
         return "The target for root node";

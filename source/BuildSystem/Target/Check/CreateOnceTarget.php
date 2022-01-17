@@ -36,4 +36,20 @@ abstract class CreateOnceTarget extends LockFileControlledTarget
     {
         return $this->getLastRun() != 0;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getType(): string
+    {
+        return "create-once";
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getDescription(): string
+    {
+        return "Create once target";
+    }
 }

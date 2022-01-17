@@ -67,6 +67,14 @@ class TargetPhony implements TargetInterface
     /**
      * @inheritdoc
      */
+    public function getType(): string
+    {
+        return "phony";
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getDescription(): string
     {
         return sprintf("Phony target for %s", $this->name);

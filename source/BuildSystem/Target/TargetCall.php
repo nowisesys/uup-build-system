@@ -27,16 +27,24 @@ namespace UUP\BuildSystem\Target;
 class TargetCall implements TargetInterface
 {
     /**
+     * @var string The target name.
+     */
+    private string $name;
+
+    /**
      * @var string The source code.
      */
     private string $code;
 
     /**
      * Constructor.
+     *
+     * @param string $name The target name.
      * @param string $code The source code.
      */
-    public function __construct(string $code = "")
+    public function __construct(string $name = "", string $code = "")
     {
+        $this->name = $name;
         $this->code = $code;
     }
 
@@ -60,6 +68,14 @@ class TargetCall implements TargetInterface
      * @inheritdoc
      */
     public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getType(): string
     {
         return "call";
     }
