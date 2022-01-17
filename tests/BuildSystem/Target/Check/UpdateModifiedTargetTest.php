@@ -10,12 +10,11 @@ class MyTarget3 extends UpdateModifiedTarget
     public function __construct()
     {
         parent::__construct("/tmp/my-target3");
-        touch("/tmp/my-target3");
     }
 
-    public function getDescription(): string
+    public function initialize()
     {
-        return "My Target 3";
+        touch("/tmp/my-target3");
     }
 
     public function cleanup()
@@ -37,24 +36,28 @@ class UpdateModifiedTargetTest extends TestCase
 {
     public function testIsUpdated()
     {
-        $target = new MyTarget3();
-        $this->assertFalse($target->isUpdated());
+        $this->assertFalse($this->target->isUpdated());
 
-        $target->rebuild();
-        $this->assertTrue($target->isUpdated());
+        $this->target->rebuild();
+        $this->assertTrue($this->target->isUpdated());
 
-        touch($target->getFilename());
-        touch($target->getLastTimePath(), time() - 1);      // Fake rebuild one second ago
+        touch($this->target->getFilename());
+        touch($this->target->getLastTimePath(), time() - 1);      // Fake rebuild one second ago
 
-        $this->assertFalse($target->isUpdated());
+        $this->assertFalse($this->target->isUpdated());
 
-        $target->rebuild();
-        $this->assertTrue($target->isUpdated());
+        $this->target->rebuild();
+        $this->assertTrue($this->target->isUpdated());
+    }
+
+    protected function setUp(): void
+    {
+        $this->target = new MyTarget3();
+        $this->target->initialize();
     }
 
     protected function tearDown(): void
     {
-        $target = new MyTarget3();
-        $target->cleanup();
+        $this->target->cleanup();
     }
 }

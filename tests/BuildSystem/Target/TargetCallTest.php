@@ -10,7 +10,13 @@ class TargetCallTest extends TestCase
     public function testGetName()
     {
         $target = new TargetCall();
-        $this->assertEquals("call", $target->getName());
+        $this->assertEquals("", $target->getName());
+    }
+
+    public function testGetType()
+    {
+        $target = new TargetCall();
+        $this->assertEquals("call", $target->getType());
     }
 
     public function testGetDescription()

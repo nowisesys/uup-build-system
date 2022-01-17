@@ -13,6 +13,12 @@ class TargetRootTest extends TestCase
         $this->assertEquals("root", $target->getName());
     }
 
+    public function testGetType()
+    {
+        $target = new TargetRoot();
+        $this->assertEquals("root", $target->getType());
+    }
+
     public function testGetDescription()
     {
         $target = new TargetRoot();

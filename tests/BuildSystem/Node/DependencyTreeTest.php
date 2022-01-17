@@ -21,6 +21,7 @@ class DependencyTreeTest extends TestCase
     {
         $tree = new DependencyTree();
         $this->assertEquals("root", $tree->getTarget()->getName());
+        $this->assertEquals("root", $tree->getTarget()->getType());
     }
 
     public function testGetRegistry()

@@ -2,8 +2,8 @@
 
 namespace UUP\Tests\BuildSystem\File;
 
-use UUP\BuildSystem\File\TargetArguments;
 use PHPUnit\Framework\TestCase;
+use UUP\BuildSystem\File\TargetArguments;
 
 class TargetArgumentsTest extends TestCase
 {

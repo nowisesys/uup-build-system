@@ -7,11 +7,16 @@ use UUP\BuildSystem\Target\TargetShell;
 
 class TargetShellTest extends TestCase
 {
-
     public function testGetName()
     {
         $target = new TargetShell();
-        $this->assertEquals("shell", $target->getName());
+        $this->assertEquals("", $target->getName());
+    }
+
+    public function testGetType()
+    {
+        $target = new TargetShell();
+        $this->assertEquals("shell", $target->getType());
     }
 
     public function testGetDescription()
@@ -28,19 +33,19 @@ class TargetShellTest extends TestCase
 
     public function testRebuild()
     {
-        $target = new TargetShell("pwd && ls -l");
+        $target = new TargetShell("", "pwd && ls -l");
         $target->rebuild();     // Output from both commands
 
-        $target = new TargetShell("pwd && ls -l >& /dev/null");
+        $target = new TargetShell("", "pwd && ls -l >& /dev/null");
         $target->rebuild();     // Output from pwd only
 
-        $target = new TargetShell("(pwd && ls -l) >& /dev/null");
+        $target = new TargetShell("", "(pwd && ls -l) >& /dev/null");
         $target->rebuild();     // Silent
 
-        $target = new TargetShell("@(pwd && ls -l)");
+        $target = new TargetShell("", "@(pwd && ls -l)");
         $target->rebuild();     // Silent
 
-        $target = new TargetShell("@(pwd; ls -l)");
+        $target = new TargetShell("", "@(pwd; ls -l)");
         $target->rebuild();     // Silent
 
         $this->assertTrue(true);

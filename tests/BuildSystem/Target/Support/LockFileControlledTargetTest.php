@@ -11,18 +11,17 @@ class MyTarget0 extends LockFileControlledTarget
 
     public function __construct()
     {
-        parent::__construct("/tmp/my-target");
-        touch("/tmp/my-target");
-    }
-
-    public function getDescription(): string
-    {
-        return "My Target";
+        parent::__construct("/tmp/my-target0");
     }
 
     public function getBuilt(): int
     {
         return $this->built;
+    }
+
+    public function initialize()
+    {
+        touch("/tmp/my-target0");
     }
 
     public function cleanup()
@@ -45,89 +44,89 @@ class LockFileControlledTargetTest extends TestCase
 {
     public function testGetName()
     {
-        $target = new MyTarget0();
-        $this->assertEquals("my-target", $target->getName());
+        $this->assertEquals("my-target0", $this->target->getName());
+    }
+
+    public function testGetType()
+    {
+        $this->assertEquals("lockfile", $this->target->getType());
     }
 
     public function testGetFilename()
     {
-        $target = new MyTarget0();
-        $this->assertEquals("/tmp/my-target", $target->getFilename());
+        $this->assertEquals("/tmp/my-target0", $this->target->getFilename());
     }
 
     public function testGetLastTimePath()
     {
-        $target = new MyTarget0();
-        $this->assertNotEmpty($target->getLastTimePath());
-        $this->assertEquals("my-target.last", basename($target->getLastTimePath()));
+        $this->assertNotEmpty($this->target->getLastTimePath());
+        $this->assertEquals("my-target0.last", basename($this->target->getLastTimePath()));
     }
 
     public function testSetLastTimePath()
     {
-        $target = new MyTarget0();
-        $target->setLastTimePath("/tmp/my-target.last");
-        $this->assertNotEmpty($target->getLastTimePath());
-        $this->assertEquals("/tmp/my-target.last", $target->getLastTimePath());
+        $this->target->setLastTimePath("/tmp/my-target.last");
+        $this->assertNotEmpty($this->target->getLastTimePath());
+        $this->assertEquals("/tmp/my-target.last", $this->target->getLastTimePath());
     }
 
     public function testGetLockFilePath()
     {
-        $target = new MyTarget0();
-        $this->assertNotEmpty($target->getLockFilePath());
-        $this->assertEquals("my-target.lock", basename($target->getLockFilePath()));
+        $this->assertNotEmpty($this->target->getLockFilePath());
+        $this->assertEquals("my-target0.lock", basename($this->target->getLockFilePath()));
     }
 
     public function testSetLockFilePath()
     {
-        $target = new MyTarget0();
-        $target->setLockFilePath("/tmp/my-target.lock");
-        $this->assertNotEmpty($target->getLockFilePath());
-        $this->assertEquals("/tmp/my-target.lock", $target->getLockFilePath());
+        $this->target->setLockFilePath("/tmp/my-target.lock");
+        $this->assertNotEmpty($this->target->getLockFilePath());
+        $this->assertEquals("/tmp/my-target.lock", $this->target->getLockFilePath());
     }
 
     public function testGetLastRun()
     {
-        $target = new MyTarget0();
-        $this->assertEquals(0, $target->getLastRun());
+        $this->assertEquals(0, $this->target->getLastRun());
 
-        $target->rebuild();
-        $this->assertEquals(time(), $target->getLastRun());
+        $this->target->rebuild();
+        $this->assertEquals(time(), $this->target->getLastRun());
     }
 
     public function testIsLocked()
     {
-        $target = new MyTarget0();
-        $this->assertFalse($target->isLocked());
+        $this->assertFalse($this->target->isLocked());
     }
 
     public function testIsUpdated()
     {
-        $target = new MyTarget0();
-        $this->assertFalse($target->isUpdated());
+        $this->assertFalse($this->target->isUpdated());
 
-        $target->rebuild();
-        $this->assertTrue($target->isUpdated());
+        $this->target->rebuild();
+        $this->assertTrue($this->target->isUpdated());
     }
 
     public function testRebuild()
     {
-        $target = new MyTarget0();
-        $target->rebuild();
-        $this->assertEquals(1, $target->getBuilt());
+        $this->target->rebuild();
+        $this->assertEquals(1, $this->target->getBuilt());
 
-        $target->rebuild();
-        $this->assertEquals(2, $target->getBuilt());
+        $this->target->rebuild();
+        $this->assertEquals(2, $this->target->getBuilt());
 
-        if (!$target->isUpdated()) {
-            $target->rebuild();
+        if (!$this->target->isUpdated()) {
+            $this->target->rebuild();
         }
 
-        $this->assertEquals(2, $target->getBuilt());
+        $this->assertEquals(2, $this->target->getBuilt());
+    }
+
+    protected function setUp(): void
+    {
+        $this->target = new MyTarget0();
+        $this->target->initialize();
     }
 
     protected function tearDown(): void
     {
-        $target = new MyTarget0();
-        $target->cleanup();
+        $this->target->cleanup();
     }
 }

@@ -10,12 +10,11 @@ class MyTarget2 extends CreateOnceTarget
     public function __construct()
     {
         parent::__construct("/tmp/my-target2");
-        touch("/tmp/my-target2");
     }
 
-    public function getDescription(): string
+    public function initialize()
     {
-        return "My Target 2";
+        touch("/tmp/my-target2");
     }
 
     public function cleanup()
@@ -37,21 +36,25 @@ class CreateOnceTargetTest extends TestCase
 {
     public function testIsUpdated()
     {
-        $target = new MyTarget2();
-        $this->assertFalse($target->isUpdated());
+        $this->assertFalse($this->target->isUpdated());
 
-        $target->rebuild();
-        $this->assertTrue($target->isUpdated());
+        $this->target->rebuild();
+        $this->assertTrue($this->target->isUpdated());
 
-        touch($target->getFilename());
-        touch($target->getLastTimePath(), time() - 1);      // Fake rebuild one second ago
+        touch($this->target->getFilename());
+        touch($this->target->getLastTimePath(), time() - 1);      // Fake rebuild one second ago
 
-        $this->assertTrue($target->isUpdated());
+        $this->assertTrue($this->target->isUpdated());
+    }
+
+    protected function setUp(): void
+    {
+        $this->target = new MyTarget2();
+        $this->target->initialize();
     }
 
     protected function tearDown(): void
     {
-        $target = new MyTarget2();
-        $target->cleanup();
+        $this->target->cleanup();
     }
 }

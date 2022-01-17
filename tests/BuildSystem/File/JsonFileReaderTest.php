@@ -3,6 +3,7 @@
 namespace UUP\Tests\BuildSystem\File;
 
 use PHPUnit\Framework\TestCase;
+use ReflectionException;
 use UUP\BuildSystem\File\JsonFileReader;
 
 class JsonFileReaderTest extends TestCase
@@ -10,7 +11,7 @@ class JsonFileReaderTest extends TestCase
     use FileReaderTrait;
 
     /**
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function testAddDependencies()
     {

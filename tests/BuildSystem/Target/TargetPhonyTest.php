@@ -13,6 +13,12 @@ class TargetPhonyTest extends TestCase
         $this->assertEquals("test", $target->getName());
     }
 
+    public function testGetType()
+    {
+        $target = new TargetPhony("test");
+        $this->assertEquals("phony", $target->getType());
+    }
+
     public function testGetDescription()
     {
         $target = new TargetPhony("test");

@@ -25,7 +25,13 @@ class DependencyListTest extends TestCase
     public function testGetName()
     {
         $list = $this->getDependencyList();
-        $this->assertEquals("list", $list->getName());
+        $this->assertEquals("root", $list->getName());
+    }
+
+    public function testGetType()
+    {
+        $list = $this->getDependencyList();
+        $this->assertEquals("list", $list->getType());
     }
 
     public function testGetDescription()

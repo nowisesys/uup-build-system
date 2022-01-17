@@ -10,12 +10,11 @@ class MyTarget1 extends AlwaysBuildTarget
     public function __construct()
     {
         parent::__construct("/tmp/my-target1");
-        touch("/tmp/my-target1");
     }
 
-    public function getDescription(): string
+    public function initialize()
     {
-        return "My Target 1";
+        touch("/tmp/my-target1");
     }
 
     public function cleanup()
@@ -37,16 +36,20 @@ class AlwaysBuildTargetTest extends TestCase
 {
     public function testIsUpdated()
     {
-        $target = new MyTarget1();
-        $this->assertFalse($target->isUpdated());
+        $this->assertFalse($this->target->isUpdated());
 
-        $target->rebuild();
-        $this->assertFalse($target->isUpdated());
+        $this->target->rebuild();
+        $this->assertFalse($this->target->isUpdated());
+    }
+
+    protected function setUp(): void
+    {
+        $this->target = new MyTarget1();
+        $this->target->initialize();
     }
 
     protected function tearDown(): void
     {
-        $target = new MyTarget1();
-        $target->cleanup();
+        $this->target->cleanup();
     }
 }

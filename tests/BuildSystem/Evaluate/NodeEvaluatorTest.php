@@ -32,7 +32,13 @@ class NodeEvaluatorTest extends TestCase
     public function testGetName()
     {
         $evaluator = $this->getEvaluator(new Target("T1"));
-        $this->assertEquals("evaluator", $evaluator->getName());
+        $this->assertEquals("T1", $evaluator->getName());
+    }
+
+    public function testGetType()
+    {
+        $evaluator = $this->getEvaluator(new Target("T1"));
+        $this->assertEquals("evaluator", $evaluator->getType());
     }
 
     public function testGetDescription()
