@@ -113,3 +113,54 @@ php example/definition-tree.php
 
 It's recommended to throw exceptions from targets. It will immediately terminate the target
 and stop child targets from being processed.
+
+### LOCK FILE CONTROLLED:
+
+The classes under the `UUP\BuildSystem\Target\Check` namespace could be used to for defining
+lockfile controlled build targets.
+
+A real-world example could be to define a target for migrating the database to latest.
+
+```php
+class Migrations extends AlwaysBuildTarget
+{
+    public function __construct()
+    {
+        parent::__construct("migrations");
+    }
+
+    public function perform(): void
+    {
+        $migrator = new DatabaseMigrator();
+        $migrator->migrate();
+    }
+
+    public function getName(): string
+    {
+        return "Migrations";
+    }
+
+    public function getDescription(): string
+    {
+        return "Migrate the database to latest";
+    }
+}
+```
+
+The method `perform()` contains action to perform. This example assumes that there exists some hypothetical
+class that performs the database migration. 
+
+If we have some bootstrap of database to perform (like setup schema), then it would make sense to define a 
+separate bootstrap run-once target. In the makefile we would then declare these targets to have migrations depend 
+on bootstrap being run first:
+
+```makefile
+Bootstrap:
+Migrations: Bootstrap
+```
+
+#### PERMISSION
+
+By default, the build directory inside this package is used for lockfile storage. It can be overrun by passing
+the location argument to constructor. Make sure the lockfile directory is writable by the user that runs the 
+build steps.
