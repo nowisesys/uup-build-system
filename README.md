@@ -248,7 +248,7 @@ clean:
     Shell("find -name *.tmp -type f | xargs rm -f")
 ```
 
-Wrap commands within `@(...)` to suppress output.
+Wrap commands within `@(...)` or `@@(...)` to suppress output.
 
 ```makefile
 clean:
