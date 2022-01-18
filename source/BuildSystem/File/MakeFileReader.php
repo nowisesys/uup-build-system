@@ -20,7 +20,6 @@ declare(strict_types=1);
 
 namespace UUP\BuildSystem\File;
 
-use ReflectionException;
 use RuntimeException;
 use UUP\Application\Convert\Boolean;
 
@@ -42,19 +41,7 @@ class MakeFileReader extends FileReaderBase implements FileReaderInterface
         }
 
         $content = $this->getMakeContent($filename);
-
-        if (array_key_exists('namespace', $content)) {
-            $this->setNamespace($content['namespace']);
-        }
-        if (array_key_exists('targets', $content)) {
-            $this->addTargets($content['targets']);
-        }
-        if (array_key_exists('debug', $content)) {
-            $this->setDebug(Boolean::convert($content['debug']));
-        }
-        if (array_key_exists('verbose', $content)) {
-            $this->setVerbose(Boolean::convert($content['verbose']));
-        }
+        $this->setDependencies($content);
     }
 
     /**
@@ -65,14 +52,14 @@ class MakeFileReader extends FileReaderBase implements FileReaderInterface
      *
      * @param string $filename The filename path.
      * @return array
-     * @throws ReflectionException
      */
     private function getMakeContent(string $filename): array
     {
+        $handle = fopen($filename, "r");
+
         $result = [
             'targets' => []
         ];
-        $handle = fopen($filename, "r");
 
         while ($line = fgets($handle)) {
             $line = trim($line, " \n");
@@ -92,42 +79,30 @@ class MakeFileReader extends FileReaderBase implements FileReaderInterface
         }
 
         fclose($handle);
-
         return $result;
     }
 
     /**
-     * Add goal definitions to dependency tree.
-     * @throws ReflectionException
-     */
-    private function addTargets(array $targets): void
-    {
-        foreach ($targets as $target => $options) {
-            $definition = $this->getGoalDefinition($target, $options);
-            $this->getDependencyTree()->addDefinition($definition);
-        }
-    }
-
-    /**
-     * Set option from makefile content.
+     * Set options in result array.
+     *
      * @param string $key The option key.
      * @param string $value The option value.
-     * @throws ReflectionException
+     * @param array $result
      */
-    private function setOptions(string $key, string $value): void
+    private function setOptions(string $key, string $value, array &$result): void
     {
         switch ($key) {
             case 'NAMESPACE':
-                $this->setNamespace($value);
+                $result['namespace'] = $value;
                 break;
             case 'DEBUG':
-                $this->setDebug(Boolean::convert($value));
+                $result['debug'] = Boolean::convert($value);
                 break;
             case 'VERBOSE':
-                $this->setVerbose(Boolean::convert($value));
+                $result['verbose'] = Boolean::convert($value);
                 break;
             case 'PHONY':
-                $this->addPhonyTargets(preg_split('/\s+/', $value));
+                $result['phony'] = preg_split('/\s+/', $value);
             default:
                 // ignored right now
         }

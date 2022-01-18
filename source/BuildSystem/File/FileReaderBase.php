@@ -183,4 +183,41 @@ abstract class FileReaderBase implements FileReaderInterface
     {
         return new ReflectionClass($this->getClassName($class));
     }
+
+    /**
+     * Set content parsed from input file.
+     *
+     * @param array $content The content array.
+     * @throws ReflectionException
+     */
+    protected function setDependencies(array $content): void
+    {
+        if (array_key_exists('verbose', $content)) {
+            $this->setVerbose($content['verbose']);
+        }
+        if (array_key_exists('debug', $content)) {
+            $this->setDebug($content['debug']);
+        }
+        if (array_key_exists('phony', $content)) {
+            $this->addPhonyTargets($content['phony']);
+        }
+        if (array_key_exists('namespace', $content)) {
+            $this->setNamespace($content['namespace']);
+        }
+        if (array_key_exists('targets', $content)) {
+            $this->addTargets($content['targets']);
+        }
+    }
+
+    /**
+     * Add goal definitions to dependency tree.
+     * @throws ReflectionException
+     */
+    private function addTargets(array $targets): void
+    {
+        foreach ($targets as $target => $options) {
+            $definition = $this->getGoalDefinition($target, $options);
+            $this->getDependencyTree()->addDefinition($definition);
+        }
+    }
 }
