@@ -63,13 +63,20 @@ class TargetShell implements TargetInterface
      */
     public function rebuild(): void
     {
-        if (preg_match('/@\((.*)\)/', $this->commands, $matches)) {
+        if (preg_match('/@@\((.*)\)/', $this->commands, $matches)) {
             if (system(sprintf("(%s) >& /dev/null", $matches[1]), $code) === false) {
                 throw new RuntimeException(sprintf(
                     "Failed execute '%s' in system shell (silent:%d)", $matches[1], $code
                 ));
             }
+        } elseif (preg_match('/@\((.*)\)/', $this->commands, $matches)) {
+            if (system($matches[1], $code) === false) {
+                throw new RuntimeException(sprintf(
+                    "Failed execute '%s' in system shell (noecho:%d)", $this->commands, $code
+                ));
+            }
         } else {
+            printf("%s\n", $this->commands);
             if (system($this->commands, $code) === false) {
                 throw new RuntimeException(sprintf(
                     "Failed execute '%s' in system shell (verbose:%d)", $this->commands, $code
