@@ -80,8 +80,8 @@ class MakeFileReader extends FileReaderBase implements FileReaderInterface
             if (empty($line) || preg_match('/^#/', $line)) {
                 continue;
             } elseif (preg_match('/\s*(\w+)\s*:=\s*(.*)\s*/', $line, $matches)) {
-                $this->setOptions($matches[1], $matches[2]);
-            } elseif (preg_match('/^(\w+)\s*:\s*(.*)/', $line, $matches)) {
+                $this->setOptions($matches[1], $matches[2], $result);
+            } elseif (preg_match('/^([^\s:]+)\s*:\s*(.*)/', $line, $matches)) {
                 $this->setRule($matches[1], $matches[2]);
                 $this->setTarget($matches[1], $matches[2]);   // implicit defined target
                 $result['targets'][$this->rule->getName()] = $this->rule->getDefinition();
