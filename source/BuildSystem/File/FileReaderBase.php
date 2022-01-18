@@ -140,6 +140,18 @@ abstract class FileReaderBase implements FileReaderInterface
             $options['class'] = TargetCall::class;
         }
 
+        if (empty($options['arguments']) || $options['arguments'][0] != $target) {
+            array_unshift($options['arguments'], $target);
+        }
+
+        if ($this->getDependencyTree()->getRegistry()->hasNode($target)) {
+            return new GoalDefinition($this->getDependencyTree()
+                ->getRegistry()
+                ->getNode($target)
+                ->getTarget(), $options['dependencies']
+            );
+        }
+
         /** @noinspection PhpParamsInspection */
 
         return new GoalDefinition(
