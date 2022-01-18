@@ -3,7 +3,6 @@
     "debug": true,
     "phony": [
         "all",
-        "clean",
         "dist-clean"
     ],
     "namespace": "UUP\\BuildSystem\\Tests",
@@ -79,6 +78,24 @@
             ],
             "dependencies": [
                 "T5"
+            ]
+        },
+        "clean": {
+            "class": "Shell",
+            "arguments": [
+                "rm -f *.bak"
+            ],
+            "dependencies": [
+                "dist-clean"
+            ]
+        },
+        "all-clean": {
+            "class": "Shell",
+            "arguments": [
+                "rm -f *~"
+            ],
+            "dependencies": [
+                "dist-clean"
             ]
         }
     }

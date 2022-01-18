@@ -2,7 +2,7 @@
 
 VERBOSE	:= true
 DEBUG	:= true
-PHONY	:= all clean dist-clean
+PHONY	:= all dist-clean
 
 NAMESPACE := UUP\BuildSystem\Tests
 
@@ -22,3 +22,8 @@ T7 : T5
 	Target("T7")
 T8 : T5
 	Target("T8", 123, true)
+
+clean: dist-clean
+	Shell("rm -f *.bak")
+all-clean: dist-clean
+	Shell("rm -f *~")
