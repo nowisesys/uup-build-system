@@ -20,8 +20,6 @@ declare(strict_types=1);
 
 namespace UUP\BuildSystem\File;
 
-use InvalidArgumentException;
-
 class TargetArguments
 {
     /**
@@ -67,7 +65,7 @@ class TargetArguments
             $arguments = $this->getQuotedStringList($arguments);    // i.e. 'T1 T2' -> '"T1", "T2"'
         }
 
-        $this->arguments = json_decode(sprintf("[%s]", $arguments));
+        $this->arguments = json_decode(sprintf("[%s]", $arguments), true);
     }
 
     /**
