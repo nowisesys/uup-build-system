@@ -10,6 +10,7 @@ class MyTarget1 extends AlwaysBuildTarget
     public function __construct()
     {
         parent::__construct("/tmp/my-target1");
+        parent::setName("my-target1");
     }
 
     public function initialize()
@@ -24,6 +25,9 @@ class MyTarget1 extends AlwaysBuildTarget
         }
         if (file_exists($this->getLockFilePath())) {
             unlink($this->getLockFilePath());
+        }
+        if (file_exists($this->getFilename())) {
+            unlink($this->getFilename());
         }
     }
 
@@ -40,6 +44,16 @@ class AlwaysBuildTargetTest extends TestCase
 
         $this->target->rebuild();
         $this->assertFalse($this->target->isUpdated());
+    }
+
+    public function testGetType()
+    {
+        $this->assertEquals("always-build", $this->target->getType());
+    }
+
+    public function testGetDescription()
+    {
+        $this->assertEquals("Always rebuild target", $this->target->getDescription());
     }
 
     protected function setUp(): void

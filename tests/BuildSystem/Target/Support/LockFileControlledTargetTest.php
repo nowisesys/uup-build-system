@@ -12,6 +12,7 @@ class MyTarget0 extends LockFileControlledTarget
     public function __construct()
     {
         parent::__construct("/tmp/my-target0");
+        parent::setName("my-target0");
     }
 
     public function getBuilt(): int
@@ -31,6 +32,9 @@ class MyTarget0 extends LockFileControlledTarget
         }
         if (file_exists($this->getLockFilePath())) {
             unlink($this->getLockFilePath());
+        }
+        if (file_exists($this->getFilename())) {
+            unlink($this->getFilename());
         }
     }
 

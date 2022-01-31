@@ -10,6 +10,7 @@ class MyTarget3 extends UpdateModifiedTarget
     public function __construct()
     {
         parent::__construct("/tmp/my-target3");
+        parent::setName("my-target3");
     }
 
     public function initialize()
@@ -24,6 +25,9 @@ class MyTarget3 extends UpdateModifiedTarget
         }
         if (file_exists($this->getLockFilePath())) {
             unlink($this->getLockFilePath());
+        }
+        if (file_exists($this->getFilename())) {
+            unlink($this->getFilename());
         }
     }
 
@@ -48,6 +52,16 @@ class UpdateModifiedTargetTest extends TestCase
 
         $this->target->rebuild();
         $this->assertTrue($this->target->isUpdated());
+    }
+
+    public function testGetType()
+    {
+        $this->assertEquals("update-modified", $this->target->getType());
+    }
+
+    public function testGetDescription()
+    {
+        $this->assertEquals("Update when modified target", $this->target->getDescription());
     }
 
     protected function setUp(): void
