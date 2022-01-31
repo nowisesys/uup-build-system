@@ -40,6 +40,7 @@ abstract class LockFileControlledTarget extends TargetBase
      * Use build directory in this package as lockfile location.
      */
     const USE_BUILD_PATH_DIR = 'build';
+
     /**
      * Use system temp directory as lockfile location.
      */
@@ -48,18 +49,22 @@ abstract class LockFileControlledTarget extends TargetBase
     /**
      * @var string Some data file.
      */
+
     private string $filename;
     /**
      * @var string The default lockfile location.
      */
+
     private string $location;
     /**
      * @var string The lockfile path.
      */
+
     private string $lockfile;
     /**
      * @var string The last build file path.
      */
+
     private string $lasttime;
 
     /**
@@ -70,9 +75,7 @@ abstract class LockFileControlledTarget extends TargetBase
     public function __construct(string $filename, string $location = self::USE_BUILD_PATH_DIR)
     {
         $this->filename = $filename;
-        $this->location = $this->getLocation($location);
-        $this->lockfile = $this->getFilepath(sprintf("%s.lock", $filename));
-        $this->lasttime = $this->getFilepath(sprintf("%s.last", $filename));
+        $this->location = $location;
     }
 
     /**
@@ -193,11 +196,7 @@ abstract class LockFileControlledTarget extends TargetBase
     }
 
     /**
-     * The action to perform.
-     *
-     * Implement this method to define the action for your target.
-     *
-     * @return void
+     * The action to perform for this target.
      */
     abstract protected function perform(): void;
 
@@ -206,25 +205,24 @@ abstract class LockFileControlledTarget extends TargetBase
      * @param string $filename The filename.
      * @return string
      */
-    private function getFilepath(string $filename): string
+    protected function getFilepath(string $filename): string
     {
-        return sprintf("%s/%s", $this->location, basename($filename));
+        return sprintf("%s/%s", $this->getLocation(), basename($filename));
     }
 
     /**
      * Get location directory path.
-     * @param string $location The location (USE_BUILD_PATH_XXX constant or directory).
      * @return string
      */
-    private function getLocation(string $location): string
+    protected function getLocation(): string
     {
-        switch ($location) {
+        switch ($this->location) {
             case self::USE_BUILD_PATH_DIR:
                 return sprintf("%s/%s", __DIR__, '../../../../build');
             case self::USE_BUILD_PATH_TMP:
                 return sys_get_temp_dir();
             default:
-                return $location;
+                return $this->location;
         }
     }
 }
