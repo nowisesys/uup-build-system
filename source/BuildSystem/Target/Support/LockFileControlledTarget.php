@@ -20,7 +20,7 @@ declare(strict_types=1);
 
 namespace UUP\BuildSystem\Target\Support;
 
-use UUP\BuildSystem\Target\TargetInterface;
+use UUP\BuildSystem\Target\TargetBase;
 
 /**
  * Support class for lockfile controlled builds.
@@ -34,7 +34,7 @@ use UUP\BuildSystem\Target\TargetInterface;
  *
  * @author Anders Lövgren (Nowise Systems)
  */
-abstract class LockFileControlledTarget implements TargetInterface
+abstract class LockFileControlledTarget extends TargetBase
 {
     /**
      * Use build directory in this package as lockfile location.
