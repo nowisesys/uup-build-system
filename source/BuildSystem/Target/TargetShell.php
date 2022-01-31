@@ -26,13 +26,8 @@ use RuntimeException;
  * Execute commands in a system shell.
  * @author Anders Lövgren (Nowise Systems)
  */
-class TargetShell implements TargetInterface
+class TargetShell extends TargetBase
 {
-    /**
-     * @var string The target name.
-     */
-    private string $name;
-
     /**
      * @var string The commands to execute.
      */
@@ -40,13 +35,10 @@ class TargetShell implements TargetInterface
 
     /**
      * Constructor.
-     *
-     * @param string $name The target name.
      * @param string $commands The commands to execute.
      */
-    public function __construct(string $name = "", string $commands = "")
+    public function __construct(string $commands = "")
     {
-        $this->name = $name;
         $this->commands = $commands;
     }
 
@@ -83,14 +75,6 @@ class TargetShell implements TargetInterface
                 ));
             }
         }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getName(): string
-    {
-        return $this->name;
     }
 
     /**

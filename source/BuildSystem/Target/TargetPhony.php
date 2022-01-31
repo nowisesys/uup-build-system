@@ -24,20 +24,10 @@ namespace UUP\BuildSystem\Target;
  * Support class for phony targets.
  * @author Anders Lövgren (Nowise Systems)
  */
-class TargetPhony implements TargetInterface
+class TargetPhony extends TargetBase
 {
-    /**
-     * @var string The target name.
-     */
-    private string $name;
-
-    /**
-     * Constructor.
-     * @param string $name The target name.
-     */
-    public function __construct(string $name)
+    public function __construct()
     {
-        $this->name = $name;
     }
 
     /**
@@ -59,14 +49,6 @@ class TargetPhony implements TargetInterface
     /**
      * @inheritdoc
      */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getType(): string
     {
         return "phony";
@@ -77,6 +59,6 @@ class TargetPhony implements TargetInterface
      */
     public function getDescription(): string
     {
-        return sprintf("Phony target for %s", $this->name);
+        return sprintf("Phony target for %s", $this->getName());
     }
 }

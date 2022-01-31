@@ -24,13 +24,8 @@ namespace UUP\BuildSystem\Target;
  * Run arbitrary PHP code.
  * @author Anders Lövgren (Nowise Systems)
  */
-class TargetCall implements TargetInterface
+class TargetCall extends TargetBase
 {
-    /**
-     * @var string The target name.
-     */
-    private string $name;
-
     /**
      * @var string The source code.
      */
@@ -38,13 +33,10 @@ class TargetCall implements TargetInterface
 
     /**
      * Constructor.
-     *
-     * @param string $name The target name.
      * @param string $code The source code.
      */
-    public function __construct(string $name = "", string $code = "")
+    public function __construct(string $code = "")
     {
-        $this->name = $name;
         $this->code = $code;
     }
 
@@ -62,14 +54,6 @@ class TargetCall implements TargetInterface
     public function rebuild(): void
     {
         eval($this->code);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getName(): string
-    {
-        return $this->name;
     }
 
     /**
