@@ -23,7 +23,11 @@ namespace UUP\BuildSystem\Target\Check;
 use UUP\BuildSystem\Target\Support\LockFileControlledTarget;
 
 /**
- * Target is rebuild if source file is newer than last run.
+ * Update if modified.
+ *
+ * Target is rebuild if source file is newer than last run. Use this class for
+ * targets that depends on source file being newer.
+ *
  * @author Anders Lövgren (Nowise Systems)
  */
 abstract class UpdateModifiedTarget extends LockFileControlledTarget

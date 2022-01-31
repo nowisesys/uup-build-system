@@ -23,8 +23,12 @@ namespace UUP\BuildSystem\Target\Check;
 use UUP\BuildSystem\Target\Support\LockFileControlledTarget;
 
 /**
- * Target is always rebuilt whether source file is newer than last
- * execution or not.
+ * Always rebuilt target.
+ *
+ * Target is always rebuilt whether source file is newer than last execution
+ * or not. Use this class for targets that should always be rebuilt, unless
+ * already executing.
+ *
  * @author Anders Lövgren (Nowise Systems)
  */
 abstract class AlwaysBuildTarget extends LockFileControlledTarget

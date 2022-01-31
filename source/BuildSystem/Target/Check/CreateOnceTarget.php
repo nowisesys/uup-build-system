@@ -23,8 +23,11 @@ namespace UUP\BuildSystem\Target\Check;
 use UUP\BuildSystem\Target\Support\LockFileControlledTarget;
 
 /**
- * Target is rebuilt once. Check if a last time file exist for
- * deciding if target should be built.
+ * Created once target.
+ *
+ * Check if a last time file exist for deciding if target should be built. Use
+ * this class for target that should only be executed once.
+ *
  * @author Anders Lövgren (Nowise Systems)
  */
 abstract class CreateOnceTarget extends LockFileControlledTarget
