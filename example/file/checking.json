@@ -1,0 +1,110 @@
+{
+    "verbose": true,
+    "debug": true,
+    "phony": [
+        "all",
+        "dist-clean"
+    ],
+    "namespace": "UUP\\BuildSystem\\Tests",
+    "targets": {
+        "T1": {
+            "class": "Checking",
+            "arguments": [
+                "C1"
+            ],
+            "dependencies": []
+        },
+        "T2": {
+            "class": "Checking",
+            "arguments": [
+                "C2"
+            ],
+            "dependencies": [
+                "T1"
+            ]
+        },
+        "T3": {
+            "class": "Checking",
+            "arguments": [
+                "C3"
+            ],
+            "dependencies": [
+                "T1"
+            ]
+        },
+        "T4": {
+            "class": "Checking",
+            "arguments": [
+                "C4"
+            ],
+            "dependencies": [
+                "T2"
+            ]
+        },
+        "T5": {
+            "class": "Checking",
+            "arguments": [
+                "C5"
+            ],
+            "dependencies": [
+                "T2",
+                "T3"
+            ]
+        },
+        "T6": {
+            "class": "Checking",
+            "arguments": [
+                "C6"
+            ],
+            "dependencies": [
+                "T4"
+            ]
+        },
+        "T7": {
+            "class": "Checking",
+            "arguments": [
+                "C7"
+            ],
+            "dependencies": [
+                "T5"
+            ]
+        },
+        "T8": {
+            "class": "Checking",
+            "arguments": [
+                "C8",
+                123,
+                true
+            ],
+            "dependencies": [
+                "T5"
+            ]
+        },
+        "clean": {
+            "class": "Shell",
+            "arguments": [
+                "rm -f *.bak"
+            ],
+            "dependencies": [
+                "dist-clean"
+            ]
+        },
+        "all-clean": {
+            "class": "Shell",
+            "arguments": [
+                "rm -f *~"
+            ],
+            "dependencies": [
+                "dist-clean"
+            ]
+        },
+        "dep-clean": {
+            "class": "Shell",
+            "arguments": [
+                "rm -f build/*.last"
+            ],
+            "dependencies": [
+            ]
+        }
+    }
+}
