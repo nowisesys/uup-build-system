@@ -171,12 +171,21 @@ abstract class LockFileControlledTarget extends TargetBase
         }
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getName(): string
+    public function setName(string $name): void
     {
-        return basename($this->filename);
+        parent::setName($name);
+
+        $this->setLastTimePath(
+            $this->getFilepath(
+                sprintf("%s.last", $name)
+            )
+        );
+
+        $this->setLockFilePath(
+            $this->getFilepath(
+                sprintf("%s.lock", $name)
+            )
+        );
     }
 
     /**
