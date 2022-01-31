@@ -6,3 +6,5 @@ composer.lock
 composer-dev.lock
 
 TODO.txt
+
+build/*.last
