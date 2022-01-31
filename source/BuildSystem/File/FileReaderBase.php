@@ -25,6 +25,7 @@ use ReflectionClass;
 use ReflectionException;
 use UUP\BuildSystem\Goal\GoalDefinition;
 use UUP\BuildSystem\Node\DependencyTree;
+use UUP\BuildSystem\Target\TargetBase;
 use UUP\BuildSystem\Target\TargetCall;
 use UUP\BuildSystem\Target\TargetPhony;
 use UUP\BuildSystem\Target\TargetShell;
@@ -140,10 +141,6 @@ abstract class FileReaderBase implements FileReaderInterface
             $options['class'] = TargetCall::class;
         }
 
-        if (empty($options['arguments']) || $options['arguments'][0] != $target) {
-            array_unshift($options['arguments'], $target);
-        }
-
         if ($this->getDependencyTree()->getRegistry()->hasNode($target)) {
             return new GoalDefinition($this->getDependencyTree()
                 ->getRegistry()
@@ -152,12 +149,16 @@ abstract class FileReaderBase implements FileReaderInterface
             );
         }
 
-        /** @noinspection PhpParamsInspection */
+        /** @var TargetBase $instance */
+
+        $instance = $this->getReflectionClass($options['class'])
+            ->newInstance(...$options['arguments']);
+
+        $instance->setName($target);
+        $instance->setDependencies($options['dependencies']);
 
         return new GoalDefinition(
-            $this->getReflectionClass($options['class'])
-                ->newInstance(...$options['arguments']),
-            $options['dependencies']
+            $instance, $options['dependencies']
         );
     }
 
