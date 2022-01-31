@@ -20,13 +20,13 @@ declare(strict_types=1);
 
 namespace UUP\BuildSystem\Tests;
 
-use UUP\BuildSystem\Target\TargetInterface;
+use UUP\BuildSystem\Target\TargetBase;
 
 /**
  * Support class for examples and unit testing.
  * @author Anders Lövgren (Nowise Systems)
  */
-class Target implements TargetInterface
+class Target extends TargetBase
 {
     private string $name;
     private bool $updated = false;
