@@ -40,3 +40,18 @@ abstract class DependencyCheckingTarget extends DependencyCheckingBase
     }
 }
 ```
+
+### OVERRIDE:
+
+Last option is to simply override the `getLocation()` to return your preferred location.
+
+```php
+
+abstract class DependencyCheckingTarget extends DependencyCheckingBase
+{
+    protected function getLocation(): string
+    {
+        return "/tmp/build";
+    }
+}
+```
