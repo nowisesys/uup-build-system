@@ -20,68 +20,33 @@ declare(strict_types=1);
 
 namespace UUP\BuildSystem\Tests;
 
-use UUP\BuildSystem\Target\TargetBase;
+use UUP\BuildSystem\Target\Check\DependencyCheckingTarget;
 
 /**
  * Support class for examples and unit testing.
  * @author Anders Lövgren (Nowise Systems)
  */
-class Target extends TargetBase
+class Checking extends DependencyCheckingTarget
 {
     private string $name;
     private array $params;
-    private bool $updated = false;
 
     /**
      * Constructor.
      * @param string $name The target name.
      * @param array $params Optional target arguments.
      */
-    public function __construct(string $name, ...$params)
+    public function __construct(string $name = "", ...$params)
     {
+        parent::__construct("");
+
         $this->name = $name;
         $this->params = $params;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function isUpdated(): bool
+    protected function perform(): void
     {
-        printf("Called isUpdated() on %s (updated=%b) (%s)\n", $this->name, $this->updated, json_encode($this->params));
-        return $this->updated;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function rebuild(): void
-    {
-        printf("Called rebuild() on %s (updated=%b)\n", $this->name, $this->updated);
-        $this->updated = true;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getType(): string
-    {
-        return "test";
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getDescription(): string
-    {
-        return sprintf("Example target %s", $this->name);
+        printf("Called perform() on %s (%s: %s)\n", $this->getName(), $this->name, json_encode($this->params));
+        usleep(250000);   // Simulate some work...
     }
 }
