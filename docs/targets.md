@@ -1,7 +1,7 @@
 TARGETS
 ============================================
 
-Targets should implement the interface TargetInterface. The Target class used in examples could be
+Targets should extend the abstract base class TargetBase. The Target class used in examples could be
 used as guidance. 
 
 ### IMPLEMENTATION:
@@ -10,7 +10,7 @@ A class that represent some job that processes a file to produce data used by ot
 implemented something like this:
 
 ```php
-class FileProcessorTarget implements TargetInterface 
+class FileProcessorTarget extends TargetBase
 {
     private string $filename;
     private string $lockfile;

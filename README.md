@@ -3,19 +3,19 @@
 A build system similar to make with complex dependency tree. Declare goals (target and dependencies)
 and evaluate the dependency tree to rebuild targets in correct order.
 
-Goals are **either** defined _programmatically in code_ or declared in _one or more make-files_. The remaining job for
-users are to implement the target interface with some concrete actions.
+Goals are **either** defined _programmatically in code_ or declared in _one or more make-files_. The remaining job 
+for users are to implement the target interface with some concrete actions. Use the TargetBase class to simplify 
+that task.
 
 ### GETTING STARTED:
 
-It's recommended to work with files, even though this README tries to completely describe both modes as simple as
+It's recommended to work with files, even though this README tries to describe both modes as simple and complete as
 possible.
 
 #### GENERATE FILES
 
 * Generate one or more make files using the `generate` option.
 * Changing default namespace and add target classes.
-* Notice that all target classes should return their name.
 
 ```shell
 ./vendor/bin/pbsmake generate > build.make
@@ -52,7 +52,7 @@ targets (goals) by their name. A goal is what's used for constructing the depend
 
 ### DECLARATIONS:
 
-What, when & how everything should be build can either be declared programmatically in code, static declared with files
+How everything should be build can either be declared programmatically in code, static declared with files
 or a mixture of them.
 
 ### NODES & TREES:
@@ -81,7 +81,7 @@ Currently, [GNU makefile](example/file/input.make) or [JSON](example/file/input.
 
 #### MAKEFILE
 
-An example of makefile declaration is this:
+An example of makefile declaration using the test target class looks like this:
 
 ```makefile
 VERBOSE	:= true
@@ -107,18 +107,20 @@ T8 : T5
 	Target("T8", 123, true)
 ```
 
-As usual, the left-hand side is the rule target and right-hand side list dependencies. The Target class implements the
-PHP code to execute for that rule target. The T5 target depends on T2 and T3, while T6 and T7 both depends on T5.
+Following conventions, the left-hand side is the rule target and right-hand side list dependencies. The Target class 
+implements the PHP code to execute for that rule target. The T5 target depends on T2 and T3, while T6 and T7 both 
+depends on T5.
 
-The target class will be constructed with variadic number of arguments. It's thus possible to use the same target class
-in multiple rules and define different behavior from arguments. First argument will always be the target name followed
-by any optional arguments:
+The target class will be constructed with variadic number of arguments. It's thus possible to use the same target 
+class in multiple rules and define different behavior from arguments. 
+
+Target name and list of dependencies will be passed to the target class instance.
 
 ```makefile
 T1 :
-	Target()            # Constructs new Target("T1"), were T1 is derived from target name.
+	Target()            # Constructs new Target(), with name T1 derived from target name.
 T8 : T5
-	Target(123, true)   # Constructs new Target("T8", 123, true) from target name with optional arguments.
+	Target(123, true)   # Constructs new Target(123, true) named T8.
 ```
 
 In reality, the Target class will be replaced by different classes. This is just an example makefile purely for testing.
@@ -169,9 +171,6 @@ Each T* class is present in this test namespace and can be tested with:
 
 It's possible to mix rules with implicit/explicit target classes. Classes don't have to be defined in the namespace
 declared in the make file, use fully qualified class name if present in some other namespace.
-
-Implicit target will get the list of dependencies passed as constructor arguments. For example, the T5 class will be
-constructed with ("T2", "T3") as constructor arguments.
 
 #### PROBING
 
@@ -317,7 +316,9 @@ The default is to build a target node with all its dependency and child nodes. F
 more [standard make mode](example/make-compat.php), building child nodes can be disabled:
 
 ```php
-$tree->getEvaluator()->setRebuildChildren(false)->rebuild();
+$tree->getEvaluator()
+    ->setRebuildChildren(false)
+    ->rebuild();
 ```
 
 Then the output will be:
