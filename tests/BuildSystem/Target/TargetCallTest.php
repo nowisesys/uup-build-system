@@ -7,12 +7,6 @@ use UUP\BuildSystem\Target\TargetCall;
 
 class TargetCallTest extends TestCase
 {
-    public function testGetName()
-    {
-        $target = new TargetCall();
-        $this->assertEquals("", $target->getName());
-    }
-
     public function testGetType()
     {
         $target = new TargetCall();

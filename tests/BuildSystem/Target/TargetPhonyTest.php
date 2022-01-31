@@ -7,12 +7,6 @@ use UUP\BuildSystem\Target\TargetPhony;
 
 class TargetPhonyTest extends TestCase
 {
-    public function testGetName()
-    {
-        $target = new TargetPhony("test");
-        $this->assertEquals("test", $target->getName());
-    }
-
     public function testGetType()
     {
         $target = new TargetPhony("test");
@@ -21,7 +15,8 @@ class TargetPhonyTest extends TestCase
 
     public function testGetDescription()
     {
-        $target = new TargetPhony("test");
+        $target = new TargetPhony();
+        $target->setName("test");
         $this->assertEquals("Phony target for test", $target->getDescription());
     }
 
