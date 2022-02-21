@@ -73,6 +73,13 @@ interface FileReaderInterface
     public function setVerbose(bool $enable = true): void;
 
     /**
+     * Set environment variable.
+     * @param string $name The variable name.
+     * @param mixed $value The variable value.
+     */
+    public function setEnvironment(string $name, $value): void;
+
+    /**
      * Define names as phony (virtual) targets.
      * @param array $names The target names.
      */

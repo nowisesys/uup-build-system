@@ -103,8 +103,9 @@ class MakeFileReader extends FileReaderBase implements FileReaderInterface
                 break;
             case 'PHONY':
                 $result['phony'] = preg_split('/\s+/', $value);
+                break;
             default:
-                // ignored right now
+                $result[strtolower($key)] = $value;
         }
     }
 

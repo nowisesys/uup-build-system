@@ -72,6 +72,33 @@ abstract class TargetBase implements TargetInterface
     }
 
     /**
+     * Get environment variable.
+     *
+     * When using the file reader, then any variable not reserved will be injected
+     * into the environment. This method provides a convenience method for accessing
+     * those variables with default value if missing.
+     *
+     * @param string $name The variable name.
+     * @param mixed $default
+     * @return mixed
+     */
+    public function getEnvironment(string $name, $default = "")
+    {
+        return $_ENV[$name] ?? $default;
+    }
+
+    /**
+     * Set environment variable.
+     *
+     * @param string $name The variable name.
+     * @param mixed $value The variable value.
+     */
+    public function setEnvironment(string $name, $value): void
+    {
+        $_ENV[$name] = $value;
+    }
+
+    /**
      * @inheritdoc
      */
     public function getType(): string

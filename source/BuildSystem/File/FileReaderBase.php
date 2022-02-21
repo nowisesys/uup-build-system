@@ -40,6 +40,10 @@ use UUP\BuildSystem\Target\TargetShell;
  */
 abstract class FileReaderBase implements FileReaderInterface
 {
+    private static array $reserved = [
+        'verbose', 'debug', 'phony', 'namespace', 'targets'
+    ];
+
     private string $namespace = "";
     private DependencyTree $dependencyTree;
 
@@ -97,6 +101,14 @@ abstract class FileReaderBase implements FileReaderInterface
     public function setVerbose(bool $enable = true): void
     {
         $_ENV['PBS_MAKE_VERBOSE'] = $enable;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setEnvironment(string $name, $value): void
+    {
+        $_ENV[$name] = $value;
     }
 
     /**
@@ -207,6 +219,12 @@ abstract class FileReaderBase implements FileReaderInterface
         }
         if (array_key_exists('targets', $content)) {
             $this->addTargets($content['targets']);
+        }
+
+        foreach ($content as $name => $value) {
+            if (!in_array($name, self::$reserved)) {
+                $this->setEnvironment(strtoupper($name), $value);
+            }
         }
     }
 
