@@ -6,6 +6,7 @@
         "clean",
         "dist-clean"
     ],
+    "conversion": "production",
     "namespace": "UUP\\BuildSystem\\Tests\\Implicit",
     "targets": {
         "T1": {

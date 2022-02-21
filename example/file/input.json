@@ -5,6 +5,7 @@
         "all",
         "dist-clean"
     ],
+    "conversion": "production",
     "namespace": "UUP\\BuildSystem\\Tests",
     "targets": {
         "T1": {

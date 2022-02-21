@@ -1,5 +1,7 @@
 # Makefile
 
+CONVERSION	:= production
+
 VERBOSE	:= true
 DEBUG	:= true
 PHONY	:= all clean dist-clean
