@@ -60,4 +60,19 @@ trait FileReaderTrait
         $this->assertEquals(["T5"], $targets($registry->getNode("T7")->getParents()));
         $this->assertEquals(["T5"], $targets($registry->getNode("T8")->getParents()));
     }
+
+    private function checkEnvironment()
+    {
+        $this->assertTrue($_ENV["PBS_MAKE_DEBUG"]);
+        $this->assertTrue($_ENV["PBS_MAKE_VERBOSE"]);
+        $this->assertEquals("production", $_ENV["CONVERSION"]);
+    }
+
+    protected function setUp(): void
+    {
+        $_ENV = [
+            'ANOTHER' => 123,
+            'CONVERSION' => 'replaced'
+        ];
+    }
 }

@@ -59,4 +59,19 @@ class TargetBaseTest extends TestCase
         $target = new MyTarget();
         $this->assertEquals('Abstract target base', $target->getDescription());
     }
+
+    public function testGetEnvironment()
+    {
+        $target = new MyTarget();
+        $this->assertEquals("", $target->getEnvironment("hello"));
+        $this->assertEquals("world", $target->getEnvironment("hello", "world"));
+    }
+
+    public function testSetEnvironment()
+    {
+        $target = new MyTarget();
+        $target->setEnvironment("hello", "world");
+        $this->assertEquals("world", $target->getEnvironment("hello"));
+        $this->assertEquals("world", $target->getEnvironment("hello", "there"));
+    }
 }

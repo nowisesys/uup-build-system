@@ -13,16 +13,24 @@ class JsonFileReaderTest extends TestCase
     /**
      * @throws ReflectionException
      */
-    public function testAddDependencies()
+    public function testAddDependenciesInput()
     {
         $reader = new JsonFileReader();
         $reader->addDependencies(__DIR__ . '/../../../example/file/input.json');
         $this->assertEquals("UUP\\BuildSystem\\Tests", $reader->getNamespace());
         $this->checkDependencyTree($reader);
+        $this->checkEnvironment();
+    }
 
+    /**
+     * @throws ReflectionException
+     */
+    public function testAddDependenciesImplicit()
+    {
         $reader = new JsonFileReader();
         $reader->addDependencies(__DIR__ . '/../../../example/file/implicit.json');
         $this->assertEquals("UUP\\BuildSystem\\Tests\\Implicit", $reader->getNamespace());
         $this->checkDependencyTree($reader);
+        $this->checkEnvironment();
     }
 }
